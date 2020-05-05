@@ -6,6 +6,7 @@ CREATE TABLE `userCredentials` (
 	`password` varchar(32) NOT NULL,
 	`role` varchar(10) NOT NULL,
 	`login_blocked` timestamp DEFAULT NULL,
-	`login_failed` int DEFAULT 0
+	`login_failed` int DEFAULT 0,
+	`last_failed_attempt` timestamp DEFAULT NULL,
 	PRIMARY KEY (`username`)
 );
