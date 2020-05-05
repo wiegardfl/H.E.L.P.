@@ -13,10 +13,9 @@
                 <Setter Property="Margin" Value="50 20 50 10"/>
             </Style>
             <Style TargetType="{x:Type ComboBox}">
-                <Setter Property="Margin" Value="10 80 20 0"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="VerticalAlignment" Value="Top"/>
-                <Setter Property="Width" Value="250"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style TargetType="{x:Type GroupBox}">
                 <Setter Property="Margin" Value="10"/>
@@ -30,86 +29,110 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
-            <RowDefinition Height="1,0"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel VerticalAlignment="Stretch">
-            <Button x:Name="NewCaseBtn" Height="35" Content="Neuer Fall" BorderThickness="2" Click="NewCaseBtn_Click" />
-            <GroupBox Grid.Column="0" Header="Priorität" Height="Auto" FontSize="16" VerticalContentAlignment="Stretch">
-                <StackPanel Margin="10,10,10,10" Orientation="Vertical" VerticalAlignment="Stretch">
-                    <ComboBox Width="250" Background="White" Margin="10 0">
-                        <ComboBoxItem IsSelected="True">Prioriät</ComboBoxItem>
-                        <ComboBoxItem Background="#FF0000">Stufe1</ComboBoxItem>
-                        <ComboBoxItem Background="#FFA500">Stufe2</ComboBoxItem>
-                        <ComboBoxItem Background="#FFFF00">Stufe3</ComboBoxItem>
-                        <ComboBoxItem Background="#00FF00">Stufe4</ComboBoxItem>
-                        <ComboBoxItem Background="#0000FF" Foreground="#FFFFFF" VerticalAlignment="Center">Stufe5</ComboBoxItem>
-                    </ComboBox>
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
+        <Button x:Name="NewCaseBtn" Height="35" Content="Neuer Fall" BorderThickness="2" Click="NewCaseBtn_Click" />
 
-        <GroupBox Grid.Column="1" Header="Patientenname" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch">
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <ComboBox Width="250" Margin="10,80,20,10">
-                    <ComboBoxItem IsSelected="True">Patientenname</ComboBoxItem>
-                    <ComboBoxItem>Max Mustermann</ComboBoxItem>
-                    <ComboBoxItem>Markus Müller</ComboBoxItem>
-                    <ComboBoxItem>Johanna Schmidt</ComboBoxItem>
-                    <ComboBoxItem>Bernd Schäfer</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
+        <GroupBox Grid.Column="1" Header="Priorität">
+            <ComboBox>
+                <ComboBox.Resources>
+                    <Style TargetType="{x:Type ComboBoxItem}">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </ComboBox.Resources>
+                <ComboBoxItem Background="#FF0000">Stufe1</ComboBoxItem>
+                <ComboBoxItem Background="#FFA500">Stufe2</ComboBoxItem>
+                <ComboBoxItem Background="#FFFF00">Stufe3</ComboBoxItem>
+                <ComboBoxItem Background="#00FF00">Stufe4</ComboBoxItem>
+                <ComboBoxItem Background="#0000FF">Stufe5</ComboBoxItem>
+            </ComboBox>
         </GroupBox>
 
-        <GroupBox Grid.Column="2" Header="Besucherzimmer" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch">
-            <StackPanel Margin="10,10,10,10" Orientation="Horizontal">
-                <ComboBox Width="250" Margin="10,80,20,10">
-                    <ComboBoxItem IsSelected="True">Besucherzimmer</ComboBoxItem>
-                    <ComboBoxItem>Zimmer 1</ComboBoxItem>
-                    <ComboBoxItem>Zimmer 2</ComboBoxItem>
-                    <ComboBoxItem>Zimmer 3</ComboBoxItem>
-                    <ComboBoxItem>Zimmer 4</ComboBoxItem>
-                    <ComboBoxItem>Zimmer 5</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
+        <GroupBox Grid.Column="2" Header="Patientenname" >
+            <ComboBox>
+                <ComboBoxItem>Max Mustermann</ComboBoxItem>
+                <ComboBoxItem>Markus Müller</ComboBoxItem>
+                <ComboBoxItem>Johanna Schmidt</ComboBoxItem>
+                <ComboBoxItem>Bernd Schäfer</ComboBoxItem>
+            </ComboBox>
         </GroupBox>
 
-        <GroupBox Grid.Column="3" Header="Status" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch">
-            <StackPanel Margin="10,10,10,10" Orientation="Horizontal">
-                <ComboBox Width="250" Margin="10,80,20,10">
-                    <ComboBoxItem IsSelected="True">Status</ComboBoxItem>
-                    <ComboBoxItem>Im Wartezimmer</ComboBoxItem>
-                    <ComboBoxItem>In Behandlung</ComboBoxItem>
-                    <ComboBoxItem>In Beobachtung</ComboBoxItem>
-                    <ComboBoxItem>Entlassen</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
+        <GroupBox Grid.Column="3" Header="Besucherzimmer">
+            <ComboBox>
+                <ComboBoxItem>Zimmer 1</ComboBoxItem>
+                <ComboBoxItem>Zimmer 2</ComboBoxItem>
+                <ComboBoxItem>Zimmer 3</ComboBoxItem>
+                <ComboBoxItem>Zimmer 4</ComboBoxItem>
+                <ComboBoxItem>Zimmer 5</ComboBoxItem>
+            </ComboBox>
         </GroupBox>
-        <GroupBox Grid.Column="4" Header="Durchgangsnummer" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch">
-            <StackPanel Margin="10,10,10,10" Orientation="Vertical">
-                <Label Content="Durchgangsnummer" Width="155" Height="30" Margin="0,60,0,0"/>
-                <TextBox TextWrapping="Wrap" Text="Suchfeld" Width="120" Height="25" Margin="20,0,0,0" TextAlignment="Center"/>
-            </StackPanel>
+
+        <GroupBox Grid.Column="4" Header="Status">
+            <ComboBox>
+                <ComboBoxItem>Im Wartezimmer</ComboBoxItem>
+                <ComboBoxItem>In Behandlung</ComboBoxItem>
+                <ComboBoxItem>In Beobachtung</ComboBoxItem>
+                <ComboBoxItem>Entlassen</ComboBoxItem>
+            </ComboBox>
         </GroupBox>
-        <ListView Name="ListViewMain" HorizontalAlignment="Stretch" Grid.Row="2" VerticalAlignment="Stretch" Grid.ColumnSpan="5" Margin="0,0,0,-16" FontSize="16">
+        
+        <GroupBox Grid.Column="5" Header="Durchgangsnummer" >
+            <Grid Margin="10" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Padding="0 0 5 3" VerticalAlignment="Center" >Suche</Label>
+                <TextBox Grid.Column="1" FontSize="14" Padding="2 1" VerticalAlignment="Center"/>
+            </Grid>
+        </GroupBox>
+        
+        <ListView Name="ListViewMain" Margin="10" Grid.Row="1" Grid.ColumnSpan="99" FontSize="16">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Priorität" Width="150"/>
-                    <GridViewColumn Header="Neubewertung" Width="120"/>
-                    <GridViewColumn Header="Ankunft" Width="100"/>
-                    <GridViewColumn Header="Status" Width="200"/>
-                    <GridViewColumn Header="Durchgangsnummer" Width="158"/>
-                    <GridViewColumn Header="Patientenname" Width="167"/>
-                    <GridViewColumn Header="Alter" Width="70"/>
-                    <GridViewColumn Header="Behandlungszimmer" Width="200"/>
-                    <GridViewColumn Header="Beschwerde" Width="200"/>
-                    <GridViewColumn Header="Diagnose" Width="227"/>
+                    <GridViewColumn Header="Priorität" Width="{Binding ElementName=Column0, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Neubewertung" Width="{Binding ElementName=Column1, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Ankunft" Width="{Binding ElementName=Column2, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Status" Width="{Binding ElementName=Column3, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Durchgangsnummer" Width="{Binding ElementName=Column4, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Patientenname" Width="{Binding ElementName=Column5, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Alter" Width="{Binding ElementName=Column6, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Behandlungszimmer" Width="{Binding ElementName=Column7, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Beschwerde" Width="{Binding ElementName=Column8, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Diagnose" Width="{Binding ElementName=Column9, Path=ActualWidth}"/>
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Grid x:Name="HelperGrid" Margin="10" Grid.Row="1" Grid.ColumnSpan="99">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150*"/>
+                <ColumnDefinition Width="120*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="158*"/>
+                <ColumnDefinition Width="167*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="200*"/>
+                <ColumnDefinition Width="227*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Name="Column0"/>
+            <Grid Name="Column1"/>
+            <Grid Name="Column2"/>
+            <Grid Name="Column3"/>
+            <Grid Name="Column4"/>
+            <Grid Name="Column5"/>
+            <Grid Name="Column6"/>
+            <Grid Name="Column7"/>
+            <Grid Name="Column8"/>
+            <Grid Name="Column9"/>
+        </Grid>
     </Grid>
 </Window>
