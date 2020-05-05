@@ -10,7 +10,7 @@ namespace HELP.DataAccess
     {
         private static readonly string HOST = "localhost";
         private static readonly string PORT = "3306";
-        private static readonly string DATABASE = "HELPAuth";
+        private static readonly string DATABASE = "HELPAUTH";
         private static readonly string USERNAME = "root";
         private static readonly string PASSWORD = "password";
 

@@ -41,7 +41,7 @@
             <Button x:Name="NewCaseBtn" Height="35" Content="Neuer Fall" BorderThickness="2" Click="NewCaseBtn_Click" />
             <GroupBox Grid.Column="0" Header="Priorität" Height="Auto" FontSize="16" VerticalContentAlignment="Stretch">
                 <StackPanel Margin="10,10,10,10" Orientation="Vertical" VerticalAlignment="Stretch">
-                    <ComboBox Width="250" Margin="10 0">
+                    <ComboBox Width="250" Background="White" Margin="10 0">
                         <ComboBoxItem IsSelected="True">Prioriät</ComboBoxItem>
                         <ComboBoxItem Background="#FF0000">Stufe1</ComboBoxItem>
                         <ComboBoxItem Background="#FFA500">Stufe2</ComboBoxItem>

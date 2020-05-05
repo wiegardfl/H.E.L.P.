@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HELP.Forms"
         mc:Ignorable="d"
               
-        Title="Persönliche Angaben des Patienten" Height="auto" Width="1260"  ResizeMode="NoResize" Background="#FFDCD9D9" FontSize="16">
+        Title="Persönliche Angaben des Patienten" Height="540" Width="1260"  ResizeMode="NoResize" Background="#FFDCD9D9" FontSize="16">
     <Window.Resources>
         <Style TargetType="{x:Type Label}">
             <Setter Property="HorizontalAlignment" Value="Left"/>

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataModels
+namespace HELP.DataModels
 {
-    class Patient
+    public class Patient
     {
         public string FullName { get; set; }
         public string KVNR { get; set; }
         public string Geburtsdatum { get; set; }
+        public int Alter { get; set; }
     }
 }

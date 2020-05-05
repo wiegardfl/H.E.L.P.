@@ -3,7 +3,8 @@ using System.Windows;
 using System.Windows.Data;
 using System.Collections.Generic;
 
-using DataModels;
+using HELP.DataModels;
+using HELP.MainWindows;
 
 namespace HELP.Forms
 {
@@ -18,9 +19,9 @@ namespace HELP.Forms
 
             List<Patient> patients = new List<Patient>();
 
-            patients.Add(new Patient { FullName = "Hans Müller", KVNR = "0123456789", Geburtsdatum = "01/01/2000" });
-            patients.Add(new Patient { FullName = "Max Mustermann", KVNR = "9876543210", Geburtsdatum = "07/011/1985" });
-            patients.Add(new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", Geburtsdatum = "06/03/2005" });
+            patients.Add(new Patient { FullName = "Hans Müller", KVNR = "0123456789", Geburtsdatum = "01/01/2000", Alter = 20 });
+            patients.Add(new Patient { FullName = "Max Mustermann", KVNR = "9876543210", Geburtsdatum = "07/11/1985", Alter = 34 });
+            patients.Add(new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", Geburtsdatum = "06/03/2005", Alter = 15 });
 
             PatientsListView.ItemsSource = patients;
 
@@ -60,7 +61,9 @@ namespace HELP.Forms
                 MessageBox.Show("Bitte wählen Sie einen Patienten aus!", "Patienten auswählen");
             } else
             {
-                MessageBox.Show(((Patient)PatientsListView.SelectedItem).FullName);
+                (new CaseWindow((Patient)PatientsListView.SelectedItem)).Show();
+
+                Close();
             }
         }
 
@@ -71,7 +74,9 @@ namespace HELP.Forms
 
         private void ListViewItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MessageBox.Show(((Patient)PatientsListView.SelectedItem).FullName);
+            (new CaseWindow((Patient)PatientsListView.SelectedItem)).Show();
+
+            Close();
         }
     }
 }
