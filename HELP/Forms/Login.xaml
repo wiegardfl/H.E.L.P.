@@ -43,7 +43,7 @@
         <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" x:Name="Progress" VerticalAlignment="Bottom" Height="10" Margin="20 5" Background="White" Visibility="Hidden" IsIndeterminate="True" />
 
         <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="SignIn" IsDefault="True">Anmelden</Button>
+            <Button x:Name="SignIn">Anmelden</Button>
             <Button x:Name="Cancel" IsCancel="True">Abbrechen</Button>
         </WrapPanel>
     </Grid>
