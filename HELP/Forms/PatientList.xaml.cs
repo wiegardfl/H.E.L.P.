@@ -66,7 +66,12 @@ namespace HELP.Forms
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Neuen Patienten anlegen...");
+            (new Form_Patient()).Show();
+        }
+
+        private void ListViewItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            MessageBox.Show(((Patient)PatientsListView.SelectedItem).FullName);
         }
     }
 }

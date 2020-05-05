@@ -60,7 +60,6 @@ namespace HELP.DataAccess
                                 {
                                     if (DateTime.Compare(DateTime.Now, ((DateTime)result["last_failed_attempt"]).AddMinutes(5)) >= 0)
                                     {
-                                        MessageBox.Show("H");
                                         lockTimer = false;
                                     }
                                 }

@@ -10,6 +10,9 @@
         <Style TargetType="{x:Type Button}">
             <Setter Property="BorderThickness" Value="2" />
         </Style>
+        <Style TargetType="{x:Type ListViewItem}">
+            <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
+        </Style>
     </Window.Resources>
     <Grid Margin="30 20 30 30">
         <Grid.ColumnDefinitions>
