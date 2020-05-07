@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using HELP.DataModels;
 using HELP.MainWindows;
+using System.Linq;
 
 namespace HELP.Forms
 {
@@ -42,7 +43,27 @@ namespace HELP.Forms
                 return true;
             } else
             {
-                if (
+                List<string> searchValues = new List<string>(Search.Text.Split(';'));
+
+                if ("".Equals(searchValues[searchValues.Count - 1].Trim()))
+                {
+                    searchValues.RemoveAt(searchValues.Count - 1);
+                }
+
+                foreach(string value in searchValues)
+                {
+                    if (
+                    ((item as Patient).FullName.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    ((item as Patient).KVNR.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    ((item as Patient).Geburtsdatum.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+
+                /*if (
                     ((item as Patient).FullName.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
                     ((item as Patient).KVNR.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
                     ((item as Patient).Geburtsdatum.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0))
@@ -51,7 +72,7 @@ namespace HELP.Forms
                 } else
                 {
                     return false;
-                }
+                }*/
             }
         }
         private void SelectBtn_Click(object sender, RoutedEventArgs e)
