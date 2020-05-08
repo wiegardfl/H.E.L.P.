@@ -24,7 +24,11 @@ namespace HELP.Forms
             var deDE = new System.Globalization.CultureInfo("de-DE", false);
             Thread.CurrentThread.CurrentCulture = deDE;
             Thread.CurrentThread.CurrentUICulture = deDE;
+
+            Loaded += (sender, e) => Keyboard.Focus(Username);
         }
+
+
 
         private void AuthenticateUser()
         {
@@ -36,7 +40,8 @@ namespace HELP.Forms
 
                 return;
             }
-            else if ("".Equals(Password.Password.ToString().Trim())) {
+            else if ("".Equals(Password.Password.Trim()))
+            {
                 Error.Content = "Passwort eingeben!";
 
                 Error.Visibility = Visibility.Visible;
@@ -48,7 +53,7 @@ namespace HELP.Forms
             Progress.Visibility = Visibility.Visible;
 
             credentials[0] = Username.Text;
-            credentials[1] = MD5Hash.HashString(Password.Password.ToString());
+            credentials[1] = MD5Hash.HashString(Password.Password);
 
             BackgroundWorker worker = new BackgroundWorker();
 
@@ -67,9 +72,9 @@ namespace HELP.Forms
 
             if ((int)e.Result > 0)
             {
-                (new Overview()).Show();
+                new Overview().Show();
 
-                Close();
+                this.Close();
                 // How to recognize user role
                 /*switch ((int)e.Result)
                 {
@@ -95,18 +100,20 @@ namespace HELP.Forms
                 Error.Content = "Benutzername oder Passwort falsch!";
 
                 Error.Visibility = Visibility.Visible;
-            } else if ((int)e.Result == -1)
+            }
+            else if ((int)e.Result == -1)
             {
                 MessageBox.Show("Anmeldung für diesen Benutzer gesperrt! Versuchen Sie es später erneut!", "Anmeldung gesperrt");
             }
-            else if ((int)e.Result == -2) {
+            else if ((int)e.Result == -2)
+            {
                 MessageBox.Show("Cannot connect to application server!", "Error");
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (sender == Cancel) Application.Current.Shutdown();
+            if (sender == Cancel) this.Close();
             else AuthenticateUser();
         }
 

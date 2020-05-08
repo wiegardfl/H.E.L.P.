@@ -82,11 +82,14 @@ namespace HELP.DataAccess
 
                     return 0;
                 }
-                catch (MySqlException ex1) {
+                catch (MySqlException ex1) 
+                {
                     MessageBox.Show(ex1.ToString());
                     return -2;
-                } finally {
-                    try { connection.Close(); } catch (MySqlException ex2) {}
+                } 
+                finally 
+                {
+                    try { connection.Close(); } catch (MySqlException) {}
                 }
             }
         }

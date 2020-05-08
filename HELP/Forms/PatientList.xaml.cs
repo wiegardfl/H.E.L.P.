@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Data;
 using System.Collections.Generic;
 
@@ -18,17 +19,19 @@ namespace HELP.Forms
         {
             InitializeComponent();
 
-            List<Patient> patients = new List<Patient>();
-
-            patients.Add(new Patient { FullName = "Hans Müller", KVNR = "0123456789", Geburtsdatum = "01/01/2000", Alter = 20 });
-            patients.Add(new Patient { FullName = "Max Mustermann", KVNR = "9876543210", Geburtsdatum = "07/11/1985", Alter = 34 });
-            patients.Add(new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", Geburtsdatum = "06/03/2005", Alter = 15 });
+            List<Patient> patients = new List<Patient>
+            {
+                new Patient { FullName = "Hans Müller", KVNR = "0123456789", Geburtsdatum = "01/01/2000", Alter = 20 },
+                new Patient { FullName = "Max Mustermann", KVNR = "9876543210", Geburtsdatum = "07/11/1985", Alter = 34 },
+                new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", Geburtsdatum = "06/03/2005", Alter = 15 }
+            };
 
             PatientsListView.ItemsSource = patients;
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(PatientsListView.ItemsSource);
 
             view.Filter = Filter;
+            Loaded += (sender, e) => Keyboard.Focus(Search);
         }
 
         private void Search_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -43,12 +46,13 @@ namespace HELP.Forms
                 return true;
             } else
             {
-                List<string> searchValues = new List<string>(Search.Text.Split(';'));
+                string[] searchValues = Search.Text.Trim().Split();
+                //List<string> searchValues = new List<string>(Search.Text.Split(';'));
 
-                if ("".Equals(searchValues[searchValues.Count - 1].Trim()))
-                {
-                    searchValues.RemoveAt(searchValues.Count - 1);
-                }
+                //if ("".Equals(searchValues[searchValues.Count - 1].Trim()))
+                //{
+                //    searchValues.RemoveAt(searchValues.Count - 1);
+                //}
 
                 foreach(string value in searchValues)
                 {
@@ -93,7 +97,7 @@ namespace HELP.Forms
             (new Form_Patient()).Show();
         }
 
-        private void ListViewItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             (new CaseWindow((Patient)PatientsListView.SelectedItem)).Show();
 

@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:HELP"
              StartupUri="Forms\Login.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="Resources/ResourceDictionaries/ApplicationResources.xaml"/>
     </Application.Resources>
 </Application>

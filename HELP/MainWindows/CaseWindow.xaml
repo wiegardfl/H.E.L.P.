@@ -6,25 +6,31 @@
         xmlns:local="clr-namespace:HELP.MainWindows"
         mc:Ignorable="d"
               
-        Title="Behandlung von Patienten" Height="835" Width="1020"  ResizeMode="NoResize" Background="#FFDCD9D9" FontSize="16">
+        Title="Behandlung von Patienten" SizeToContent="Height"  Width="1020"  ResizeMode="CanMinimize" Background="#FFDCD9D9" FontSize="16">
     <Window.Resources>
-        <Style TargetType="{x:Type Label}">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="FontSize" Value="12"/>
+        <!--<Style TargetType="{x:Type Label}">
+                <Setter Property="FontSize" Value="12"/>
+            </Style>-->
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource NumberBox}" x:Key="Vitals2">
+            <Setter Property="Width" Value="23" />
+            <Setter Property="MaxLength" Value="2"/>
         </Style>
-        <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Padding" Value="2"/>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource NumberBox}" x:Key="Vitals3">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="MaxLength" Value="3"/>
         </Style>
-        <Style TargetType="{x:Type GroupBox}">
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource NumberBox}" x:Key="DateTime">
+            <Setter Property="Width" Value="100"/>
+        </Style>
+        <!--<Style TargetType="{x:Type GroupBox}">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="IsEditable" Value="False"/>
-            <Setter Property="Padding" Value="2"/>
-        </Style>
+            <Setter Property="Padding" Value="4"/>
+        </Style>-->
     </Window.Resources>
 
     <Grid>
@@ -41,123 +47,127 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0">
-            <StackPanel>
-                <DockPanel VerticalAlignment="Center">
-                    <!--In diesen drei Steuerelementen müssen die gesuchten Daten 
-                    direkt über die Schaltfläche Patientensuche eingegeben werden-->
-                    <Label x:Name="lblVorname" Content="Vorname" Width="150"/>
-                    <Separator Width="10" Visibility="Hidden"/>
-                    <Label x:Name="lblNachname" Content="Nachname" Width="150" />
-                    <Separator Width="10" Visibility="Hidden"/>
-                    <Label x:Name="lblAlter" Content="Alter" Width="100" />
-                    <!-- -->
-                    <Separator Width="10" Visibility="Hidden"/>
-                    <Button x:Name="btnPatientensuche" Width="120" Content="Patienten Suche" BorderThickness="2" FontSize="12" />
-                    <Separator Width="10" Visibility="Hidden"/>
-                    <Label x:Name="lblPrioritaet" Content="Priorität:"  />
-                    <ComboBox x:Name="cmbPrioritaet" Width="360">
-                        <ComboBoxItem Background="Red" Content="Rot"/>
-                        <ComboBoxItem Background="Orange" Content="Orange"/>
-                        <ComboBoxItem Background="Yellow" Content="Gelb"/>
-                        <ComboBoxItem Background="Green" Content="Grün" />
-                        <ComboBoxItem Background="Blue" Content="Blau"/>
-                    </ComboBox>
-                </DockPanel>
-            </StackPanel>
+        <GroupBox Header="Patient" Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="btnPatientensuche" Content="Suche" Width="50" HorizontalAlignment="Left" />
+
+                <Label Content="Priorität:" HorizontalAlignment="Right" />
+                <ComboBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="cmbPrioritaet" Margin="5 0 25 0">
+                    <ComboBoxItem Background="Red" Content="Rot"/>
+                    <ComboBoxItem Background="Orange" Content="Orange"/>
+                    <ComboBoxItem Background="Yellow" Content="Gelb"/>
+                    <ComboBoxItem Background="Green" Content="Grün" />
+                    <ComboBoxItem Background="Blue" Content="Blau"/>
+                </ComboBox>
+
+                <Label x:Name="lblVorname" Content="Vorname" Grid.Column="3" />
+                <Label x:Name="lblNachname" Content="Nachname" Grid.Column="4" />
+                <Label x:Name="lblAlter" Content="Alter" Grid.Column="5" />
+            </Grid>
         </GroupBox >
 
-        <GroupBox Grid.Row="1" Header="Eingabedaten" >
-            <StackPanel>
-                <DockPanel HorizontalAlignment="Left">
-                    <Label x:Name="lblDatumAnkunft" Content="Datum der Ankunft:"  HorizontalContentAlignment="Left" />
-                    <TextBox x:Name="txtDatumAnkunft" HorizontalAlignment="Left" Width="108" Height="26"/>
-                    <Label x:Name="lblUhrzeitAnkunft" Content="Uhrzeit der Ankunft:"  />
-                    <TextBox x:Name="txtUhrzeitAnkunft" HorizontalAlignment="Left" Width="128" Height="26"/>
-                </DockPanel>
-                <Separator Width="20" Visibility="Hidden"/>
+        <GroupBox Grid.Row="1" Header="Eingangsdaten">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                <DockPanel HorizontalAlignment="Stretch">
-                    <StackPanel>
-                        <Label x:Name="lblHauptproblem" Content="Hauptproblem" Width="114" />
-                        <TextBox x:Name="txtHauptproblem"  HorizontalAlignment="Left" Width="466" Height="100" AcceptsReturn="True" TextWrapping="Wrap"  VerticalScrollBarVisibility="Auto" />
-                    </StackPanel>
-                    <Separator Width="10" Visibility="Hidden"/>
-                    <StackPanel>
-                        <Label x:Name="lblAnkunftsmodus" Content="Art der Ankunft"  Width="114" />
-                        <TextBox x:Name="txtAnkunftsmodus" HorizontalAlignment="Left" Width="505" AcceptsReturn="True" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </DockPanel>
+                <Grid Margin="0 0 25 0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                <DockPanel HorizontalAlignment="Stretch">
-                    <StackPanel>
-                        <Label x:Name="lblHerkunftsort" Content="Herkunftsort" Width="114"  />
-                        <TextBox x:Name="txtHerkunftsort" HorizontalAlignment="Left" Width="466" AcceptsReturn="True" TextWrapping="Wrap"/>
-                    </StackPanel>
-                    <Separator Width="10" Visibility="Hidden"/>
-                    <StackPanel>
-                        <Label x:Name="lblTrauma" Content="Trauma"  Width="114" HorizontalContentAlignment="Left"/>
-                        <TextBox x:Name="txtTrauma" HorizontalAlignment="Left" Width="505" AcceptsReturn="True" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </DockPanel>
-            </StackPanel>
+                    <WrapPanel>
+                        <Label>Ankunft am</Label>
+                        <TextBox x:Name="txtDatumAnkunft" Style="{StaticResource DateTime}" />
+                        <Label>um</Label>
+                        <TextBox x:Name="txtUhrzeitAnkunft" Style="{StaticResource DateTime}"/>
+                        <Label>Uhr</Label>
+                    </WrapPanel>
+                    <Label Grid.Row="1" x:Name="lblHauptproblem" Content="Hauptproblem"  Margin="0 2"/>
+                    <TextBox Grid.Row="2"  x:Name="txtHauptproblem"  AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="93"  VerticalScrollBarVisibility="Auto" />
+                </Grid>
+
+                <StackPanel Grid.Column="1">
+                    <Label  Content="Art der Ankunft" />
+                    <TextBox x:Name="txtAnkunftsmodus" TextWrapping="Wrap"/>
+                    <Label  Content="Herkunftsort" />
+                    <TextBox x:Name="txtHerkunftsort"  TextWrapping="Wrap"/>
+                    <Label  Content="Trauma" />
+                    <TextBox x:Name="txtTrauma"   TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
         </GroupBox>
+
         <GroupBox Grid.Row="2" Header="Vitalparameter">
             <StackPanel>
                 <DockPanel>
                     <Label x:Name="lblVorherigeWerte" Content="Vorherige Werte:"  />
-                    <ComboBox x:Name="cmbVorherigeWerte" Width="878" >
+                    <ComboBox x:Name="cmbVorherigeWerte" >
                         <ComboBoxItem Content="25.04.2020 12:20"/>
                         <ComboBoxItem Content="25.04.2020 13:20"/>
                         <ComboBoxItem Content="25.04.2020 14:20"/>
                     </ComboBox>
                 </DockPanel>
-                <Separator Height="10" Visibility="Hidden"/>
-                <DockPanel VerticalAlignment= "Stretch">
+
+                <DockPanel VerticalAlignment= "Stretch" Margin="0 10">
                     <!--Daten zur Herzfrequenz-->
-                    <Label x:Name="lblHerzfrequenz" Content="Herzfrequenz:"  Width="83" />
-                    <TextBox x:Name="txtHerzfrequenz" HorizontalAlignment="Left" Width="30" MaxLength="3"/>
-                    <Label x:Name="lblHerzfrequenz_bpm" Content="bpm"  Width="34" />
+                    <Label Content="Herzfrequenz:" />
+                    <TextBox x:Name="txtHerzfrequenz" Style="{StaticResource Vitals3}"/>
+                    <Label  Content="bpm"  />
 
                     <!--Daten zur Atemfrequenz-->
-                    <Separator Width="35" Visibility="Hidden"/>
-                    <Label x:Name="lblAtemfrequenz" Content="Atemfrequenz:"  Width="87" />
-                    <TextBox x:Name="txtAtemfrequenz" HorizontalAlignment="Left" Width="23" MaxLength="2"/>
-                    <Label x:Name="lblAtemfrequenz_min" Content="/min."  Width="37" />
+                    <Separator Width="35" />
+                    <Label Content="Atemfrequenz:"  />
+                    <TextBox x:Name="txtAtemfrequenz" Style="{StaticResource Vitals2}"/>
+                    <Label Content="/min."   />
 
                     <!--Daten zur Blutdruck-->
-                    <Separator Width="35" Visibility="Hidden"/>
-                    <Label x:Name="lblBlutdruck" Content="Blutdruck:"  Width="62" />
-                    <TextBox x:Name="txtBlutdruckMin" HorizontalAlignment="Left" Width="30" MaxLength="3"/>
-                    <Label x:Name="lblBlutdruckSeparator" Content="/"  Width="15" />
-                    <TextBox x:Name="txtBlutdruckMax" HorizontalAlignment="Left" Width="30" MaxLength="3"/>
-                    <Label x:Name="lblBlutdruck_mmHg" Content="mmHg"  Width="45" />
+                    <Separator Width="35" />
+                    <Label Content="Blutdruck:" />
+                    <TextBox x:Name="txtBlutdruckMin"  Style="{StaticResource Vitals3}"/>
+                    <Label Content="/" />
+                    <TextBox x:Name="txtBlutdruckMax"  Style="{StaticResource Vitals3}"/>
+                    <Label Content="mmHg" />
 
                     <!--Daten zur Körpertemperatur-->
-                    <Separator Width="35" Visibility="Hidden"/>
-                    <Label x:Name="lblKoerpertemperatur" Content="Körpertemperatur:"  Width="106" />
-                    <TextBox x:Name="txtKoerpertemperatur" HorizontalAlignment="Left" Width="23" MaxLength="2"/>
-                    <Label x:Name="lblKoerpertemperatur_C" Content="Cº"  Width="22" />
+                    <Separator Width="35" />
+                    <Label Content="Körpertemperatur:" />
+                    <TextBox x:Name="txtKoerpertemperatur" Style="{StaticResource Vitals2}"/>
+                    <Label Content="Cº"  />
 
                     <!--Daten zur Sauerstoffsättigung-->
-                    <Separator Width="35" Visibility="Hidden"/>
-                    <Label x:Name="lblSauerstoff" Content="Sauerstoffsättigung (SpO2):"  Width="155" />
-                    <TextBox x:Name="txtSauerstoff" HorizontalAlignment="Left" Width="30" MaxLength="3" />
-                    <Label x:Name="lblSauerstoff_Percent" Content="%"  Width="20" />
+                    <Separator Width="35"/>
+                    <Label Content="Sauerstoffsättigung (SpO2):"  />
+                    <TextBox x:Name="txtSauerstoff" Style="{StaticResource Vitals3}" />
+                    <Label Content="%" />
                 </DockPanel>
             </StackPanel>
         </GroupBox>
+
         <GroupBox Grid.Row="3" Header="Durchgangsdaten">
             <StackPanel>
                 <!--Enabled für Krankenschwestern und Ärzte-->
-                <Label x:Name="lblSonstigeInformationen" Content="Sonstige Informationen"  Width="142" HorizontalContentAlignment="left"/>
-                <TextBox x:Name="txtSonstigeInformationen" HorizontalAlignment="Left" Width="980" AcceptsReturn="True" TextWrapping="Wrap"/>
+                <Label  Content="Sonstige Informationen"  />
+                <TextBox x:Name="txtSonstigeInformationen" />
                 <!--Enabled für Ärzte-->
-                <Label x:Name="lblAnamnese" Content="Anamnese"  Width="142" HorizontalContentAlignment="Left"/>
-                <TextBox x:Name="txtAnamnese" HorizontalAlignment="Left" Width="980" AcceptsReturn="True" TextWrapping="Wrap"/>
+                <Label  Content="Anamnese" />
+                <TextBox x:Name="txtAnamnese"  Width="980" AcceptsReturn="True" TextWrapping="Wrap"/>
                 <!--Enabled für Ärzte-->
-                <Separator Height="10" Visibility="Hidden"/>
-                <TabControl Height="150">
+
+                <TabControl Height="150" Margin="0 10 0 0">
                     <TabItem>
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
@@ -169,31 +179,32 @@
                     <TabItem>
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Externe-Dienstleistungen"/>
+                                <TextBlock Text="Externe Dienstleistungen"/>
                             </StackPanel>
                         </TabItem.Header>
                         <TextBox x:Name="txtExterneDienstleistungen" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
                     </TabItem>
                 </TabControl>
                 <!--Enabled für Ärzte-->
-                <Label x:Name="lblArztbrief" Content="Arztbrief"  Width="142" HorizontalContentAlignment="Left"/>
-                <TextBox x:Name="txtArztbrief" HorizontalAlignment="Left" Width="980" AcceptsReturn="True" TextWrapping="Wrap"/>
+                <Label x:Name="lblArztbrief" Content="Arztbrief" />
+                <TextBox x:Name="txtArztbrief"  Width="980" AcceptsReturn="True" TextWrapping="Wrap"/>
             </StackPanel>
         </GroupBox>
+
         <!--Enabled für Ärzte-->
-        <GroupBox Grid.Row="4" Header="Entlastungsdaten">
+        <GroupBox Grid.Row="4" Header="Entlassungsdaten">
             <StackPanel>
                 <DockPanel HorizontalAlignment="Stretch">
                     <StackPanel>
                         <Label x:Name="lblDiagnose" Content="Diagnose"  />
-                        <TextBox x:Name="txtDiagnose" HorizontalAlignment="Left" AcceptsReturn="True" TextWrapping="Wrap"  Width="979"/>
+                        <TextBox x:Name="txtDiagnose"  AcceptsReturn="True" TextWrapping="Wrap" />
                     </StackPanel>
                 </DockPanel>
-                <Separator Height="10" Visibility="Hidden"/>
-                <DockPanel>
+
+                <DockPanel Margin="0 10">
                     <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch">
-                            <Label x:Name="lblEntladungsmodus" Content="Entladungsmodus:"  />
+                            <Label x:Name="lblEntladungsmodus" Content="Kategorie"  />
                             <ComboBox x:Name="cmbEntladungsmodus" Width="250">
                                 <ComboBoxItem Content="Entlassung nach Hause"/>
                                 <ComboBoxItem Content="Krankenhausaufenthalt"/>
@@ -201,26 +212,27 @@
                                 <ComboBoxItem Content="Freiwilliger Austritt"/>
                                 <ComboBoxItem Content="Gestorben"/>
                             </ComboBox>
-                            <Separator Width="93" Visibility="Hidden"/>
-                            <Label x:Name="lblDatumEntladungs" Content="Datum der Entladungs:"  HorizontalContentAlignment="Left" />
-                            <TextBox x:Name="txtDatumEntladungs" HorizontalAlignment="Left" Width="108" Height="26"/>
-                            <Separator Width="20" Visibility="Hidden"/>
-                            <Label x:Name="lblUhrzeitEntladungs" Content="Uhrzeit der Entladungs:"  />
-                            <TextBox x:Name="txtUhrzeitEntladungs" HorizontalAlignment="Left" Width="138" Height="26"/>
+                            <WrapPanel DockPanel.Dock="Right">
+                                <Label>Entlassen am</Label>
+                                <TextBox x:Name="txtDatumEntlassung" Style="{StaticResource DateTime}"/>
+                                <Label>um</Label>
+                                <TextBox x:Name="txtUhrzeitEntlassung" Style="{StaticResource DateTime}"/>
+                                <Label>Uhr</Label>
+                            </WrapPanel>
+                            <Separator/>
                         </DockPanel>
                     </StackPanel>
                 </DockPanel>
             </StackPanel>
         </GroupBox>
+
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <!--Enabled für Krankenschwestern und Ärzte-->
-            <Button x:Name="btnSpeichern" Width="100" Content="Speichern" BorderThickness="2" Height="26" Margin="0,0,0,0.4" VerticalAlignment="Bottom" />
-            <Separator Width="20" Visibility="Hidden"/>
+            <Button x:Name="btnSpeichern" Width="100" Content="Speichern"  Click="btnSpeichern_Click"/>
             <!--Enabled für Krankenschwestern und Ärzte-->
-            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" BorderThickness="2" />
-            <Separator Width="20" Visibility="Hidden"/>
+            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" Margin="20 0" IsCancel="True" />
             <!--Enabled für Ärzte-->
-            <Button x:Name="btnPatientEntlassen" Width="150" Content="Patient Entlassen" BorderThickness="2" />
+            <Button x:Name="btnPatientEntlassen" Width="150" Content="Patient entlassen" />
         </StackPanel>
     </Grid>
 </Window>

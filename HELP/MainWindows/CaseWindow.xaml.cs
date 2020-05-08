@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 using HELP.DataModels;
 
@@ -18,9 +19,21 @@ namespace HELP.MainWindows
 
             this.patient = patient;
 
-            lblVorname.Content = patient.FullName.Split(' ')[0];
-            lblNachname.Content = patient.FullName.Split(' ')[1];
+            lblVorname.Content = patient.Vorname;
+            lblNachname.Content = patient.Nachname;
             lblAlter.Content = patient.Alter;
+
+            DateTime now = DateTime.Now;
+            txtDatumAnkunft.Text = now.ToString("dd.MM.yyyy");
+            txtUhrzeitAnkunft.Text = now.ToString("HH:mm");
+        }
+
+        private void btnSpeichern_Click(object sender, RoutedEventArgs e)
+        {
+            //Save changes in DataModel and DataBase
+            //
+
+            this.Close();
         }
     }
 }

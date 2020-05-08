@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HELP.Forms"
         mc:Ignorable="d"
-        Title="Anmeldung" Height="325" Width="500" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Anmeldung" Height="325" Width="500" 
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" >
     <Grid Margin="50 0 50 30">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.35*" />
@@ -34,10 +35,10 @@
         <Image Source="../Resources/Images/HELP.png" Grid.ColumnSpan="2" Margin="0 20 0 0"/>
 
         <Label Grid.Row="1" VerticalAlignment="Bottom" Margin="0 0 10 5">Benutzer:</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="Username" VerticalAlignment="Bottom" Margin="10 0 0 9" Padding="2" />
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="Username" VerticalAlignment="Bottom" Margin="10 0 0 9" />
 
         <Label Grid.Row="2" VerticalAlignment="Top" Margin="0 5 10 0">Passwort:</Label>
-        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="Password" VerticalAlignment="Top" Margin="10 10 0 0" Padding="2" KeyDown="Password_KeyDown"/>
+        <PasswordBox Grid.Row="2" Grid.Column="1"  x:Name="Password" VerticalAlignment="Top" Margin="10 10 0 0" Padding="2" KeyDown="Password_KeyDown"/>
 
         <Label Grid.Row="2" Grid.ColumnSpan="2" x:Name="Error" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="20 5" Visibility="Hidden" FontSize="12" Foreground="Red">Test</Label>
         <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" x:Name="Progress" VerticalAlignment="Bottom" Height="10" Margin="20 5" Background="White" Visibility="Hidden" IsIndeterminate="True" />

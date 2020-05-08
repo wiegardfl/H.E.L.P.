@@ -6,31 +6,26 @@
         xmlns:local="clr-namespace:HELP.Forms"
         mc:Ignorable="d"
               
-        Title="Persönliche Angaben des Patienten" Height="540" Width="1260"  ResizeMode="NoResize" Background="#FFDCD9D9" FontSize="16">
-    <Window.Resources>
+        Title="Persönliche Angaben des Patienten" Height="540" Width="1260"  ResizeMode="NoResize" Background="#FFDCD9D9" >
+    <!--<Window.Resources>
         <Style TargetType="{x:Type Label}">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="FontSize" Value="12"/>
-        </Style>
-        <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Padding" Value="2"/>
         </Style>
         <Style TargetType="{x:Type GroupBox}">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
-        <Style TargetType="{x:Type ComboBox}">
+        <Style TargetType="{x:Type ComboBox}" >
             <Setter Property="FontSize" Value="12"/>
-            <Setter Property="IsEditable" Value="True"/>
-            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Padding" Value="4"/>
         </Style>
-    </Window.Resources>
+    </Window.Resources>-->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420*"/>
-            <ColumnDefinition Width="420*"/>
-            <ColumnDefinition Width="420*"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -40,32 +35,26 @@
 
         <GroupBox Grid.Column="0" Header="Personendaten">
             <StackPanel>
-                <Label x:Name="lblVorname" Content="Vorname" />
-                <TextBox x:Name="txtVorname"  />
-                <Label x:Name="lblNachname" Content="Nachname"  />
+                <Label Content="Vorname" />
+                <TextBox x:Name="txtVorname" />
+                
+                <Label  Content="Nachname"  />
                 <TextBox x:Name="txtNachname" />
-                <Label x:Name="lblGeschlecht" Content="Geschlecht"  />
+                
+                <Label  Content="Geschlecht"  />
                 <ComboBox x:Name="cmbGeschlecht">
                     <ComboBoxItem Content="Weiblich"/>
                     <ComboBoxItem Content="Männ­lich"/>
                     <ComboBoxItem Content="Divers"/>
                 </ComboBox>
+                
                 <Label x:Name="lblGeburtsdatum" Content="Geburtsdatum"   />
+                <DatePicker FontSize="12" Language="DE-de" DisplayDateStart="1900-01-01" DisplayDateEnd="2099-12-31"/>
 
-                <DatePicker FontSize="12" Width="380">
-                    <DatePicker.BlackoutDates>
-                        <CalendarDateRange Start="1900-01-01"/>
-                    </DatePicker.BlackoutDates>
-                </DatePicker>
+                <Label Content="Geburtsort"  />
+                <TextBox x:Name="txtGeburtsort"/>
 
-                <Label x:Name="lblGeburtsort" Content="Geburtsort"  />
-                <ComboBox x:Name="cmbGeburtsort">
-                    <ComboBoxItem Content="Fulda"/>
-                    <ComboBoxItem Content="Hünfeld"/>
-                    <ComboBoxItem Content="Starnberg"/>
-                </ComboBox>
-
-                <Label x:Name="lblNationalitaet" Content="Nationalität"   />
+                <Label Content="Nationalität"   />
                 <ComboBox x:Name="cmbNationalitaet">
                     <ComboBoxItem Content="Afghanisch"/>
                     <ComboBoxItem Content="Ägyptisch"/>
@@ -76,7 +65,7 @@
                     <ComboBoxItem Content="Russisch"/>
                 </ComboBox>
 
-                <Label x:Name="lblKrankenkasse" Content="Krankenkasse"  />
+                <Label Content="Krankenkasse"  />
                 <ComboBox x:Name="cmbKrankenkasse" >
                     <ComboBoxItem Content="AOK"/>
                     <ComboBoxItem Content="Barmer"/>
@@ -85,9 +74,8 @@
                     <ComboBoxItem Content="DAK"/>
                 </ComboBox>
 
-                <Label x:Name="lblKVNr" Content="KV-Nr."  />
+                <Label Content="KV-Nr." />
                 <TextBox x:Name="txtKVNr" />
-
             </StackPanel>
         </GroupBox>
 
@@ -98,38 +86,42 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Anschrift">
                 <StackPanel>
-                    <Label x:Name="lblAdresse" Content="Adresse"  />
+                    <Label Content="Adresse"  />
                     <TextBox x:Name="txtAdresse" />
 
                     <DockPanel HorizontalAlignment="Stretch">
                         <StackPanel>
-                            <Label x:Name="lblPostleitzahl" Content="PLZ"  />
-                            <TextBox x:Name="txtPostleitzahl" MaxLength="5" Width="50" />
+                            <Label Content="PLZ"  />
+                            <TextBox x:Name="txtPostleitzahl" Style="{StaticResource NumberBox}" MaxLength="5" Width="50" />
                         </StackPanel>
-                        <Separator Width="10" Visibility="Hidden"/>
-                        <StackPanel>
-                            <Label x:Name="lblOrt" Content="Ort"  />
-                            <ComboBox x:Name="cmbOrt" >
-                                <ComboBoxItem Content="Frankfurt"/>
-                                <ComboBoxItem Content="Fulda"/>
-                                <ComboBoxItem Content="Hünfeld"/>
-                            </ComboBox>
+
+                        <StackPanel Margin="10 0 0 0">
+                            <Label Content="Ort"  />
+                            <TextBox x:Name="txtOrt" />
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>
             </GroupBox>
 
             <GroupBox Grid.Row="1" Header="Erreichbarkeit" >
-                <DockPanel>
-                    <Label DockPanel.Dock="Top" x:Name="lblTelefon" Content="Telefon"  />
-                    <TextBox DockPanel.Dock="Top" x:Name="txtTelefon" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-                    <Label DockPanel.Dock="Top" x:Name="lblMobil" Content="Mobil"  />
-                    <TextBox DockPanel.Dock="Top" x:Name="txtMobil" />
+                    <StackPanel>
+                        <Label  Content="Telefon"  />
+                        <TextBox x:Name="txtTelefon" Style="{StaticResource NumberBox}" />
 
-                    <Label DockPanel.Dock="Top" x:Name="lblZusaetzlicheInformationen" Content="Zusätzliche Informationen" />
-                    <TextBox x:Name="txtZusaetzlicheInformationen" AcceptsReturn="True" />
-                </DockPanel>
+                        <Label Content="Mobil"  />
+                        <TextBox x:Name="txtMobil" Style="{StaticResource NumberBox}"/>
+                        
+                        <Label  Content="Zusätzliche Informationen" />
+                    </StackPanel>
+                    
+                    <TextBox Grid.Row="1" x:Name="txtZusaetzlicheInformationen" AcceptsReturn="True" TextWrapping="Wrap" />
+                </Grid>
             </GroupBox>
         </Grid>
 
@@ -146,32 +138,41 @@
                     <ComboBoxItem Content="Lebenspartner"/>
                     <ComboBoxItem Content="Enkelkind"/>
                 </ComboBox>
+                
                 <Label x:Name="lblVornameAnge" Content="Vorname"  />
                 <TextBox x:Name="txtVornameAnge"  />
 
                 <Label x:Name="lblNachnameAnge" Content="Nachname"  />
                 <TextBox x:Name="txtNachnameAnge" />
+
                 <Label x:Name="lblAdresseAnge" Content="Adresse"  />
                 <TextBox x:Name="txtAdresseAnge" />
-                <Label x:Name="lblOrtAnge" Content="Ort"  />
-                <ComboBox x:Name="cmbOrtAnge" >
-                    <ComboBoxItem Content="Frankfurt"/>
-                    <ComboBoxItem Content="Fulda"/>
-                    <ComboBoxItem Content="Hünfeld"/>
-                </ComboBox>
-                <Label x:Name="lblPostleitzahlAnge" Content="Postleitzahl"  />
-                <TextBox x:Name="txtPostleitzahlAnge" />
+
+                <DockPanel HorizontalAlignment="Stretch">
+                    <StackPanel>
+                        <Label x:Name="lblPostleitzahlAnge" Content="PLZ" />
+                        <TextBox x:Name="txtPostleitzahlAnge" Style="{StaticResource NumberBox}" Width="50" MaxLength="5" />
+                    </StackPanel>
+
+                    <Separator Visibility="Hidden" Width="10"/>
+
+                    <StackPanel>
+                        <Label x:Name="lblOrtAnge" Content="Ort" />
+                        <TextBox x:Name="txtOrtAnge"/>
+                    </StackPanel>
+                </DockPanel>
+                
                 <Label x:Name="lblTelefonAnge" Content="Telefon"  />
-                <TextBox x:Name="txtTelefonAnge" />
+                <TextBox x:Name="txtTelefonAnge" Style="{StaticResource NumberBox}"/>
+                
                 <Label x:Name="lblMobilAnge" Content="Mobil"  />
-                <TextBox x:Name="txtMobilAnge"/>
+                <TextBox x:Name="txtMobilAnge" Style="{StaticResource NumberBox}"/>
             </StackPanel>
         </GroupBox>
 
         <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button x:Name="btnSpeichern" Width="100" Content="Speichern" BorderThickness="2" />
-            <Separator Width="20" Visibility="Hidden"/>
-            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" BorderThickness="2" />
+            <Button x:Name="btnSpeichern" Width="100" Content="Speichern" Margin="20 0" Click="BtnSpeichern_Click"/>
+            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" IsCancel="True"/>
         </StackPanel>
 
     </Grid>

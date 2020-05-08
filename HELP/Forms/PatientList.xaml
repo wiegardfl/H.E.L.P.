@@ -7,17 +7,11 @@
         mc:Ignorable="d"
         Title="Patienten" Height="650" Width="600" ResizeMode="NoResize" Background="#FFDCD9D9">
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="BorderThickness" Value="2" />
-        </Style>
         <Style TargetType="{x:Type ListViewItem}">
             <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
         </Style>
     </Window.Resources>
-    <Grid Margin="30 20 30 30">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+    <Grid Margin="30 20">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*" />
             <RowDefinition />
@@ -30,7 +24,7 @@
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding FullName}" Width="200" />
+                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding FullName}" />
                         <GridViewColumn Header="KV-Nr." Width="178" DisplayMemberBinding="{Binding KVNR}" />
                         <GridViewColumn Header="Geburtsdatum" Width="150" DisplayMemberBinding="{Binding Geburtsdatum}" />
                     </GridView.Columns>
@@ -38,9 +32,10 @@
             </ListView.View>
         </ListView>
 
-        <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="AddBtn" Content="Neuen Patienten anlegen" Click="AddBtn_Click" Width="150" />
-            <Button x:Name="SelectBtn" Content="Auswählen" Padding="6" Click="SelectBtn_Click" Width="150" Margin="20 0 0 0" />
-        </WrapPanel>
+        <DockPanel Grid.Row="2"  VerticalAlignment="Bottom">
+            <Button x:Name="AddBtn" Content="Neuen Patienten anlegen" Width="160"  Click="AddBtn_Click"  />
+            <Button DockPanel.Dock="Right" x:Name="SelectBtn" Content="Auswählen" Width="100" Click="SelectBtn_Click" />
+            <Separator Visibility="Hidden"/>
+        </DockPanel>
     </Grid>
 </Window>
