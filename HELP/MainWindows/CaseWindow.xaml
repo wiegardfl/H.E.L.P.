@@ -58,7 +58,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnPatientensuche" Content="Suche" Width="50" HorizontalAlignment="Left" />
+                <Button x:Name="btnPatientensuche" Content="Suche" Width="50" HorizontalAlignment="Left" Click="btnPatientensuche_Click" />
 
                 <Label Content="Priorität:" HorizontalAlignment="Right" />
                 <ComboBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="cmbPrioritaet" Margin="5 0 25 0">
@@ -230,7 +230,7 @@
             <!--Enabled für Krankenschwestern und Ärzte-->
             <Button x:Name="btnSpeichern" Width="100" Content="Speichern"  Click="btnSpeichern_Click"/>
             <!--Enabled für Krankenschwestern und Ärzte-->
-            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" Margin="20 0" IsCancel="True" />
+            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" Margin="20 0" IsCancel="True" Click="btnAbbrechen_Click" />
             <!--Enabled für Ärzte-->
             <Button x:Name="btnPatientEntlassen" Width="150" Content="Patient entlassen" />
         </StackPanel>

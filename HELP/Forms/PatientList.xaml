@@ -26,7 +26,7 @@
                     <GridView.Columns>
                         <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding FullName}" />
                         <GridViewColumn Header="KV-Nr." Width="178" DisplayMemberBinding="{Binding KVNR}" />
-                        <GridViewColumn Header="Geburtsdatum" Width="150" DisplayMemberBinding="{Binding Geburtsdatum}" />
+                        <GridViewColumn Header="Geburtsdatum" Width="150" DisplayMemberBinding="{Binding DateOfBirth}" />
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

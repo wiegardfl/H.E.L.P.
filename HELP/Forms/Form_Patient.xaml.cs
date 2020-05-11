@@ -30,5 +30,10 @@ namespace HELP.Forms
             new MainWindows.CaseWindow(new DataModels.Patient() { }).Show();
             this.Close();
         }
+
+        private void btnAbbrechen_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

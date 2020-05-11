@@ -172,7 +172,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button x:Name="btnSpeichern" Width="100" Content="Speichern" Margin="20 0" Click="BtnSpeichern_Click"/>
-            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" IsCancel="True"/>
+            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" IsCancel="True" Click="btnAbbrechen_Click"/>
         </StackPanel>
 
     </Grid>

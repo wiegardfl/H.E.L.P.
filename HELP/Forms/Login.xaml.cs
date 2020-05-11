@@ -114,12 +114,21 @@ namespace HELP.Forms
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender == Cancel) this.Close();
-            else AuthenticateUser();
+            else dummyLogin();
+            //else AuthenticateUser();
         }
 
         private void Password_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) AuthenticateUser();
+            if (e.Key == Key.Enter) dummyLogin();
+            //if (e.Key == Key.Enter) AuthenticateUser();
+        }
+
+        private void dummyLogin()
+        {
+            (new Overview()).Show();
+
+            Close();
         }
     }
 }

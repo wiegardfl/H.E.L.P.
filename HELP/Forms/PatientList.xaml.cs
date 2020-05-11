@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 using HELP.DataModels;
 using HELP.MainWindows;
-using System.Linq;
 
 namespace HELP.Forms
 {
@@ -21,9 +20,11 @@ namespace HELP.Forms
 
             List<Patient> patients = new List<Patient>
             {
-                new Patient { FullName = "Hans Müller", KVNR = "0123456789", Geburtsdatum = "01/01/2000", Alter = 20 },
-                new Patient { FullName = "Max Mustermann", KVNR = "9876543210", Geburtsdatum = "07/11/1985", Alter = 34 },
-                new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", Geburtsdatum = "06/03/2005", Alter = 15 }
+                new Patient { FullName = "Hans Müller", KVNR = "0123456789", DateOfBirth = "01/01/2000", Age = 20 },
+                new Patient { FullName = "Bernd Müller", KVNR = "0551232133", DateOfBirth = "01/01/2000", Age = 20 },
+                new Patient { FullName = "Max Mustermann", KVNR = "9876543210", DateOfBirth = "07/11/1985", Age = 34 },
+                new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", DateOfBirth = "06/03/2005", Age = 15 },
+                new Patient { FullName = "Sebastian Schmidt", KVNR = "9524244571", DateOfBirth = "15/09/1996", Age = 23}
             };
 
             PatientsListView.ItemsSource = patients;
@@ -46,37 +47,55 @@ namespace HELP.Forms
                 return true;
             } else
             {
-                string[] searchValues = Search.Text.Trim().Split();
-                //List<string> searchValues = new List<string>(Search.Text.Split(';'));
+                List<string> searchValues = new List<string>(Search.Text.Split(';'));
 
-                //if ("".Equals(searchValues[searchValues.Count - 1].Trim()))
-                //{
-                //    searchValues.RemoveAt(searchValues.Count - 1);
-                //}
-
-                foreach(string value in searchValues)
+                for (int i = 0; i < searchValues.Count; i++)
                 {
-                    if (
-                    ((item as Patient).FullName.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    ((item as Patient).KVNR.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    ((item as Patient).Geburtsdatum.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0))
+                    searchValues[i] = searchValues[i].Trim();
+                }
+
+
+                // Alternative Lösung villeicht mit Rekursion?
+                if (
+                    ((item as Patient).FullName.IndexOf(searchValues[0], StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    ((item as Patient).KVNR.IndexOf(searchValues[0], StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    ((item as Patient).DateOfBirth.IndexOf(searchValues[0], StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    if (searchValues.Count > 1)
+                    {
+                        if (
+                            ((item as Patient).FullName.IndexOf(searchValues[1], StringComparison.OrdinalIgnoreCase) >= 0) ||
+                            ((item as Patient).KVNR.IndexOf(searchValues[1], StringComparison.OrdinalIgnoreCase) >= 0) ||
+                            ((item as Patient).DateOfBirth.IndexOf(searchValues[1], StringComparison.OrdinalIgnoreCase) >= 0))
+                        {
+                            if (searchValues.Count > 2)
+                            {
+                                if (
+                                    ((item as Patient).FullName.IndexOf(searchValues[2], StringComparison.OrdinalIgnoreCase) >= 0) ||
+                                    ((item as Patient).KVNR.IndexOf(searchValues[2], StringComparison.OrdinalIgnoreCase) >= 0) ||
+                                    ((item as Patient).DateOfBirth.IndexOf(searchValues[2], StringComparison.OrdinalIgnoreCase) >= 0))
+                                {
+                                    return true;
+                                } else
+                                {
+                                    return false;
+                                }
+                            } else
+                            {
+                                return true;
+                            }
+                        } else
+                        {
+                            return false;
+                        }
+                    } else
                     {
                         return true;
                     }
-                }
-
-                return false;
-
-                /*if (
-                    ((item as Patient).FullName.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    ((item as Patient).KVNR.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    ((item as Patient).Geburtsdatum.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0))
-                {
-                    return true;
                 } else
                 {
                     return false;
-                }*/
+                }
             }
         }
         private void SelectBtn_Click(object sender, RoutedEventArgs e)

@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:HELP.MainWindows"
         mc:Ignorable="d"
         Title="H.E.L.P." Height="1000" Width="1600" Background="#FFDCD9D9" FontSize="16">
+    <Window.Resources>
+        <Style TargetType="{x:Type ListViewItem}">
+            <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
+        </Style>
+    </Window.Resources>
     <Grid ShowGridLines="False">
         <Grid.Resources>
             <!--<Style TargetType="{x:Type Button}">
@@ -91,20 +96,48 @@
                 <TextBox Grid.Column="1" FontSize="14" Style="{StaticResource NumberBox}"/>
             </Grid>
         </GroupBox>
-        
-        <ListView Name="ListViewMain" Margin="10" Grid.Row="1" Grid.ColumnSpan="99" FontSize="16">
+
+        <ListView Name="ListViewMain" Margin="10" Grid.Row="1" Grid.ColumnSpan="99" FontSize="16" SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Priorität" Width="{Binding ElementName=Column0, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Neubewertung" Width="{Binding ElementName=Column1, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Ankunft" Width="{Binding ElementName=Column2, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Status" Width="{Binding ElementName=Column3, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Durchgangsnummer" Width="{Binding ElementName=Column4, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Patientenname" Width="{Binding ElementName=Column5, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Alter" Width="{Binding ElementName=Column6, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Behandlungszimmer" Width="{Binding ElementName=Column7, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Beschwerde" Width="{Binding ElementName=Column8, Path=ActualWidth}"/>
-                    <GridViewColumn Header="Diagnose" Width="{Binding ElementName=Column9, Path=ActualWidth}"/>
+                    <GridViewColumn Header="Priorität" Width="{Binding ElementName=Column0, Path=ActualWidth}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Width="{Binding ElementName=Column0, Path=ActualWidth}" Margin="0">
+                                    <TextBlock.Style>
+                                        <Style>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Priority}" Value="Red">
+                                                    <Setter Property="TextBlock.Background" Value="#FF0000" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Priority}" Value="Orange">
+                                                    <Setter Property="TextBlock.Background" Value="#FFA500" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Priority}" Value="Yellow">
+                                                    <Setter Property="TextBlock.Background" Value="#FFFF00" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Priority}" Value="Green">
+                                                    <Setter Property="TextBlock.Background" Value="#00FF00" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Priority}" Value="Blue">
+                                                    <Setter Property="TextBlock.Background" Value="#0000FF" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Neubewertung" Width="{Binding ElementName=Column1, Path=ActualWidth}" DisplayMemberBinding="{Binding Reevaluation}" />
+                    <GridViewColumn Header="Ankunft" Width="{Binding ElementName=Column2, Path=ActualWidth}" DisplayMemberBinding="{Binding Arrival}" />
+                    <GridViewColumn Header="Status" Width="{Binding ElementName=Column3, Path=ActualWidth}" DisplayMemberBinding="{Binding Status}" />
+                    <GridViewColumn Header="Durchgangsnummer" Width="{Binding ElementName=Column4, Path=ActualWidth}" DisplayMemberBinding="{Binding CaseNr}" />
+                    <GridViewColumn Header="Patientenname" Width="{Binding ElementName=Column5, Path=ActualWidth}" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Alter" Width="{Binding ElementName=Column6, Path=ActualWidth}" DisplayMemberBinding="{Binding Age}" />
+                    <GridViewColumn Header="Behandlungszimmer" Width="{Binding ElementName=Column7, Path=ActualWidth}" DisplayMemberBinding="{Binding TreatmentRoom}" />
+                    <GridViewColumn Header="Beschwerde" Width="{Binding ElementName=Column8, Path=ActualWidth}" DisplayMemberBinding="{Binding Complaint}" />
+                    <GridViewColumn Header="Diagnose" Width="{Binding ElementName=Column9, Path=ActualWidth}" DisplayMemberBinding="{Binding Diagnosis}" />
                 </GridView>
             </ListView.View>
         </ListView>

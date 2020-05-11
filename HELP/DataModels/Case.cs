@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace HELP.DataModels
 {
-    class Case : INotifyPropertyChanged
+    public class Case : INotifyPropertyChanged
     {
         private Patient data;
         private static int dailySerialNr = 0;
         private static DateTime currentDay;
 
-        public Case()
+        public Case(Patient patient)
         {
+            data = patient;
+
             Arrival = DateTime.Now;
             CurrentDay = Arrival.Date;
             string date = Arrival.ToString("yyMMdd0000");
@@ -43,6 +45,20 @@ namespace HELP.DataModels
         public long CaseNr { get; }
 
         public string Name => data?.FullName;
+
+        public Patient Data => data;
+
+        public DateTime Reevaluation { get; set; }
+
+        public string Status { get; set; }
+
+        public int Age => data.Age;
+
+        public string TreatmentRoom { get; set; }
+
+        public string Complaint { get; set; }
+
+        public string Diagnosis { get; set; }
         #endregion
 
         #region Interface Implementation
@@ -55,4 +71,6 @@ namespace HELP.DataModels
     }
 
     public enum Category { Red = 0, Orange = 10, Yellow = 30, Green = 90, Blue = 120 }
+
+
 }
