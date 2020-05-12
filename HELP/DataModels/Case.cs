@@ -40,6 +40,8 @@ namespace HELP.DataModels
 
         public DateTime Arrival { get; }
 
+        public string ArrivalFormatted { get => Arrival.ToString("dd.MM.yyyy HH:mm"); }
+
         public Category Priority { get; set; }
 
         public long CaseNr { get; }
@@ -49,6 +51,8 @@ namespace HELP.DataModels
         public Patient Data => data;
 
         public DateTime Reevaluation { get; set; }
+
+        public string ReevaluationFormatted { get => Reevaluation.ToString("dd.MM.yyyy HH:mm"); }
 
         public string Status { get; set; }
 
@@ -70,6 +74,7 @@ namespace HELP.DataModels
         #endregion
     }
 
+    // Red = Akut, Orange = Sehr Dringed, Yellow = Dringend, Green = Normal, Blue = Nicht Dringend
     public enum Category { Red = 0, Orange = 10, Yellow = 30, Green = 90, Blue = 120 }
 
 

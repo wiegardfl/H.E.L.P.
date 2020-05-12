@@ -129,8 +129,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Neubewertung" Width="{Binding ElementName=Column1, Path=ActualWidth}" DisplayMemberBinding="{Binding Reevaluation}" />
-                    <GridViewColumn Header="Ankunft" Width="{Binding ElementName=Column2, Path=ActualWidth}" DisplayMemberBinding="{Binding Arrival}" />
+                    <GridViewColumn Header="Neubewertung" Width="{Binding ElementName=Column1, Path=ActualWidth}" DisplayMemberBinding="{Binding ReevaluationFormatted}" />
+                    <GridViewColumn Header="Ankunft" Width="{Binding ElementName=Column2, Path=ActualWidth}" DisplayMemberBinding="{Binding ArrivalFormatted}" />
                     <GridViewColumn Header="Status" Width="{Binding ElementName=Column3, Path=ActualWidth}" DisplayMemberBinding="{Binding Status}" />
                     <GridViewColumn Header="Durchgangsnummer" Width="{Binding ElementName=Column4, Path=ActualWidth}" DisplayMemberBinding="{Binding CaseNr}" />
                     <GridViewColumn Header="Patientenname" Width="{Binding ElementName=Column5, Path=ActualWidth}" DisplayMemberBinding="{Binding Name}" />

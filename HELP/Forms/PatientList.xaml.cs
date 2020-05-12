@@ -20,11 +20,11 @@ namespace HELP.Forms
 
             List<Patient> patients = new List<Patient>
             {
-                new Patient { FullName = "Hans Müller", KVNR = "0123456789", DateOfBirth = "01/01/2000", Age = 20 },
-                new Patient { FullName = "Bernd Müller", KVNR = "0551232133", DateOfBirth = "01/01/2000", Age = 20 },
-                new Patient { FullName = "Max Mustermann", KVNR = "9876543210", DateOfBirth = "07/11/1985", Age = 34 },
-                new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", DateOfBirth = "06/03/2005", Age = 15 },
-                new Patient { FullName = "Sebastian Schmidt", KVNR = "9524244571", DateOfBirth = "15/09/1996", Age = 23}
+                new Patient { FullName = "Hans Müller", KVNR = "0123456789", DateOfBirth = "01.01.2000", Age = 20 },
+                new Patient { FullName = "Bernd Müller", KVNR = "0551232133", DateOfBirth = "01.01.2000", Age = 20 },
+                new Patient { FullName = "Max Mustermann", KVNR = "9876543210", DateOfBirth = "07.11.1985", Age = 34 },
+                new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", DateOfBirth = "06.03.2005", Age = 15 },
+                new Patient { FullName = "Sebastian Schmidt", KVNR = "9524244571", DateOfBirth = "15.09.1996", Age = 23}
             };
 
             PatientsListView.ItemsSource = patients;

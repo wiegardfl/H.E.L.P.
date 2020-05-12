@@ -61,7 +61,7 @@
                 <Button x:Name="btnPatientensuche" Content="Suche" Width="50" HorizontalAlignment="Left" Click="btnPatientensuche_Click" />
 
                 <Label Content="Priorität:" HorizontalAlignment="Right" />
-                <ComboBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="cmbPrioritaet" Margin="5 0 25 0">
+                <ComboBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="cmbPrioritaet" Margin="5 0 25 0" SelectedValuePath="Content">
                     <ComboBoxItem Background="Red" Content="Rot"/>
                     <ComboBoxItem Background="Orange" Content="Orange"/>
                     <ComboBoxItem Background="Yellow" Content="Gelb"/>

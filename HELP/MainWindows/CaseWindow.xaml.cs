@@ -42,6 +42,8 @@ namespace HELP.MainWindows
             lblNachname.Content = patient.LastName;
             lblAlter.Content = patient.Age + " Jahr(e)";
 
+            cmbPrioritaet.SelectedValue = "Blau";
+
             txtDatumAnkunft.Text = systemCase.Arrival.ToString("dd.MM.yyyy");
             txtUhrzeitAnkunft.Text = systemCase.Arrival.ToString("HH:mm"); 
         }

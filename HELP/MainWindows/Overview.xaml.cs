@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HELP.Forms;
 using HELP.DataModels;
 using System;
+using Renci.SshNet.Messages;
 
 namespace HELP.MainWindows
 {
