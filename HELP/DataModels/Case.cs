@@ -75,7 +75,7 @@ namespace HELP.DataModels
     }
 
     // Red = Akut, Orange = Sehr Dringed, Yellow = Dringend, Green = Normal, Blue = Nicht Dringend
-    public enum Category { Red = 0, Orange = 10, Yellow = 30, Green = 90, Blue = 120 }
+    public enum Category { Akut = 0, Sehr_Dringend = 10, Dringend = 30, Normal = 90, Nicht_Dringend = 120 }
 
 
 }

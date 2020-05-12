@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HELP.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,15 +20,27 @@ namespace HELP.Forms
     /// </summary>
     public partial class Form_Patient : Window
     {
+
         public Form_Patient()
         {
             InitializeComponent();
+            this.DataContext = PatientData;
             Loaded += (sender, e) => Keyboard.Focus(txtVorname);
         }
 
+        public Form_Patient(Patient patient) : this()
+        {
+            PatientData = patient;
+            DataContext = patient;
+
+            cmbGeschlecht.SelectedValue = patient.Gender.ToString().Replace("ae", "ä");
+        }
+
+        public Patient PatientData { get; private set; } = new Patient();
+
         private void BtnSpeichern_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindows.CaseWindow(new DataModels.Patient() { }).Show();
+            //new MainWindows.CaseWindow(new DataModels.Patient() { }).Show();
             this.Close();
         }
 

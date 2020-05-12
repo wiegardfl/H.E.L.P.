@@ -21,6 +21,16 @@
         <TextBox x:Name="Search" VerticalAlignment="Center" HorizontalAlignment="Stretch" Padding="4" TextChanged="Search_TextChanged" />
 
         <ListView x:Name="PatientsListView" Grid.Row="1" SelectionMode="Single">
+            <ListView.Resources>
+                <ContextMenu x:Key="patientContextMenu">
+                    <MenuItem Header="Daten anzeigen" Click="MenuItem_Click" />
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ContextMenu" Value="{StaticResource patientContextMenu}" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridView.Columns>

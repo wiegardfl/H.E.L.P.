@@ -62,11 +62,11 @@
 
                 <Label Content="Priorität:" HorizontalAlignment="Right" />
                 <ComboBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="cmbPrioritaet" Margin="5 0 25 0" SelectedValuePath="Content">
-                    <ComboBoxItem Background="Red" Content="Rot"/>
-                    <ComboBoxItem Background="Orange" Content="Orange"/>
-                    <ComboBoxItem Background="Yellow" Content="Gelb"/>
-                    <ComboBoxItem Background="Green" Content="Grün" />
-                    <ComboBoxItem Background="Blue" Content="Blau"/>
+                    <ComboBoxItem Background="Red" Content="Akut"/>
+                    <ComboBoxItem Background="Orange" Content="Sehr Dringend"/>
+                    <ComboBoxItem Background="Yellow" Content="Dringend"/>
+                    <ComboBoxItem Background="Green" Content="Normal"/>
+                    <ComboBoxItem Background="Blue" Content="Nicht Dringend"/>
                 </ComboBox>
 
                 <Label x:Name="lblVorname" Content="Vorname" Grid.Column="3" />

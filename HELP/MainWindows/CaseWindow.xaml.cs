@@ -15,16 +15,16 @@ namespace HELP.MainWindows
         private Patient patient;
         private Case systemCase;
 
-        public CaseWindow(Patient patient)
+        public CaseWindow()
         {
             InitializeComponent();
 
-            this.patient = patient;
-            systemCase = new Case(patient);
+            // this.patient = patient;
+            // systemCase = new Case(patient);
 
-            lblVorname.Content = patient.FirstName;
-            lblNachname.Content = patient.LastName;
-            lblAlter.Content = patient.Age + " Jahr(e)";
+            //lblVorname.Content = patient.FirstName;
+            //lblNachname.Content = patient.LastName;
+            //lblAlter.Content = patient.Age + " Jahr(e)";
 
             DateTime now = DateTime.Now;
             txtDatumAnkunft.Text = now.ToString("dd.MM.yyyy");
@@ -42,7 +42,7 @@ namespace HELP.MainWindows
             lblNachname.Content = patient.LastName;
             lblAlter.Content = patient.Age + " Jahr(e)";
 
-            cmbPrioritaet.SelectedValue = "Blau";
+            cmbPrioritaet.SelectedValue = Convert.ToString(systemCase.Priority).Replace('_', ' ');
 
             txtDatumAnkunft.Text = systemCase.Arrival.ToString("dd.MM.yyyy");
             txtUhrzeitAnkunft.Text = systemCase.Arrival.ToString("HH:mm"); 
@@ -58,9 +58,19 @@ namespace HELP.MainWindows
 
         private void btnPatientensuche_Click(object sender, RoutedEventArgs e)
         {
-            (new PatientList()).Show();
+            PatientList patientList = new PatientList();
 
-            Close();
+            if (patientList.ShowDialog() == true)
+            {
+                patient = patientList.GetSelectedPatient;
+
+                systemCase = new Case(patient);
+
+                lblVorname.Content = patient.FirstName;
+                lblNachname.Content = patient.LastName;
+                lblAlter.Content = patient.Age + " Jahr(e)";
+            }
+            //(new PatientList()).Show();
         }
 
         private void btnAbbrechen_Click(object sender, RoutedEventArgs e)

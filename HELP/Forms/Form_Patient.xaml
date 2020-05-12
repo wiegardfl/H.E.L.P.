@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HELP.Forms"
         mc:Ignorable="d"
-              
+        
         Title="Persönliche Angaben des Patienten" Height="540" Width="1260"  ResizeMode="NoResize" Background="#FFDCD9D9" >
     <!--<Window.Resources>
         <Style TargetType="{x:Type Label}">
@@ -36,13 +36,13 @@
         <GroupBox Grid.Column="0" Header="Personendaten">
             <StackPanel>
                 <Label Content="Vorname" />
-                <TextBox x:Name="txtVorname" />
+                <TextBox x:Name="txtVorname" Text="{Binding FirstName}"/>
                 
                 <Label  Content="Nachname"  />
                 <TextBox x:Name="txtNachname" />
                 
                 <Label  Content="Geschlecht"  />
-                <ComboBox x:Name="cmbGeschlecht">
+                <ComboBox x:Name="cmbGeschlecht" SelectedValuePath="Content">
                     <ComboBoxItem Content="Weiblich"/>
                     <ComboBoxItem Content="Männ­lich"/>
                     <ComboBoxItem Content="Divers"/>

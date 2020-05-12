@@ -107,19 +107,19 @@
                                     <TextBlock.Style>
                                         <Style>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Priority}" Value="Red">
+                                                <DataTrigger Binding="{Binding Priority}" Value="Akut">
                                                     <Setter Property="TextBlock.Background" Value="#FF0000" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Priority}" Value="Orange">
+                                                <DataTrigger Binding="{Binding Priority}" Value="Sehr_Dringend">
                                                     <Setter Property="TextBlock.Background" Value="#FFA500" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Priority}" Value="Yellow">
+                                                <DataTrigger Binding="{Binding Priority}" Value="Dringend">
                                                     <Setter Property="TextBlock.Background" Value="#FFFF00" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Priority}" Value="Green">
+                                                <DataTrigger Binding="{Binding Priority}" Value="Normal">
                                                     <Setter Property="TextBlock.Background" Value="#00FF00" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Priority}" Value="Blue">
+                                                <DataTrigger Binding="{Binding Priority}" Value="Nicht_Dringend">
                                                     <Setter Property="TextBlock.Background" Value="#0000FF" />
                                                 </DataTrigger>
                                             </Style.Triggers>
