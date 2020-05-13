@@ -42,13 +42,22 @@ namespace HELP.DataModels
 
         public string ArrivalFormatted { get => Arrival.ToString("dd.MM.yyyy HH:mm"); }
 
+        public string ArrivalDateFormatted { get => Arrival.ToString("dd.MM.yyyy"); set { } }
+
+        public string ArrivalTimeFormatted { get => Arrival.ToString("HH:mm"); set { } }
+
         public Category Priority { get; set; }
 
         public long CaseNr { get; }
 
         public string Name => data?.FullName;
 
-        public Patient Data => data;
+        public string FirstName => data?.FirstName;
+
+        public string LastName => data?.LastName;
+
+        public Patient Data { get => data; set { } }
+        //public Patient Data => data;
 
         public DateTime Reevaluation { get; set; }
 
@@ -57,6 +66,8 @@ namespace HELP.DataModels
         public string Status { get; set; }
 
         public int Age => data.Age;
+
+        public string AgeText => data.Age > 120 ? "" : data.Age + " Jahr(e)";
 
         public string TreatmentRoom { get; set; }
 

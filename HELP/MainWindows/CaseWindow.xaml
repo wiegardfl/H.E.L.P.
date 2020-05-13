@@ -58,10 +58,14 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="btnPatientensuche" Content="Suche" Width="50" HorizontalAlignment="Left" Click="btnPatientensuche_Click" />
+                <WrapPanel Grid.ColumnSpan="2">
+                    <Button x:Name="btnPatientensuche" Content="Suche" Width="50" Click="btnPatientensuche_Click" />
+                    <Button x:Name="btnDatenBearbeiten" Content="Daten bearbeiten" Margin="20 0 0 0" Click="btnDatenBearbeiten_Click"/>
+                </WrapPanel>
 
-                <Label Content="Priorität:" HorizontalAlignment="Right" />
-                <ComboBox Grid.Column="1" Grid.ColumnSpan="2" x:Name="cmbPrioritaet" Margin="5 0 25 0" SelectedValuePath="Content">
+
+                <Label Content="Priorität:" HorizontalAlignment="Right" Grid.Column="1"/>
+                <ComboBox Grid.Column="2" x:Name="cmbPrioritaet" Margin="5 0 25 0" SelectedValuePath="Content">
                     <ComboBoxItem Background="Red" Content="Akut"/>
                     <ComboBoxItem Background="Orange" Content="Sehr Dringend"/>
                     <ComboBoxItem Background="Yellow" Content="Dringend"/>
@@ -69,9 +73,9 @@
                     <ComboBoxItem Background="Blue" Content="Nicht Dringend"/>
                 </ComboBox>
 
-                <Label x:Name="lblVorname" Content="Vorname" Grid.Column="3" />
-                <Label x:Name="lblNachname" Content="Nachname" Grid.Column="4" />
-                <Label x:Name="lblAlter" Content="Alter" Grid.Column="5" />
+                <Label x:Name="lblVorname" Grid.Column="3" Content="{Binding FirstName}"/>
+                <Label x:Name="lblNachname" Grid.Column="4" Content="{Binding LastName}"/>
+                <Label x:Name="lblAlter" Grid.Column="5" Content="{Binding AgeText}"/>
             </Grid>
         </GroupBox >
 
@@ -91,9 +95,9 @@
 
                     <WrapPanel>
                         <Label>Ankunft am</Label>
-                        <TextBox x:Name="txtDatumAnkunft" Style="{StaticResource DateTime}" />
+                        <TextBox x:Name="txtDatumAnkunft" Style="{StaticResource DateTime}" Text="{Binding ArrivalDateFormatted}"/>
                         <Label>um</Label>
-                        <TextBox x:Name="txtUhrzeitAnkunft" Style="{StaticResource DateTime}"/>
+                        <TextBox x:Name="txtUhrzeitAnkunft" Style="{StaticResource DateTime}" Text="{Binding ArrivalTimeFormatted}"/>
                         <Label>Uhr</Label>
                     </WrapPanel>
                     <Label Grid.Row="1" x:Name="lblHauptproblem" Content="Hauptproblem"  Margin="0 2"/>

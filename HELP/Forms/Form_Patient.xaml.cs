@@ -20,7 +20,6 @@ namespace HELP.Forms
     /// </summary>
     public partial class Form_Patient : Window
     {
-
         public Form_Patient()
         {
             InitializeComponent();
@@ -31,13 +30,15 @@ namespace HELP.Forms
         public Form_Patient(Patient patient) : this()
         {
             PatientData = patient;
-            DataContext = patient;
+            DataContext = PatientData;
 
-            cmbGeschlecht.SelectedValue = patient.Gender.ToString().Replace("ae", "ä");
+            //MessageBox.Show(patient.Gender.ToString().Replace("ae", "ä"));
+            var text = patient.Gender.ToString();
+            cmbGeschlecht.SelectedValue = text.Replace("ae", "ä");
         }
 
         public Patient PatientData { get; private set; } = new Patient();
-
+        public Patient Copy { get; private set; } = new Patient();
         private void BtnSpeichern_Click(object sender, RoutedEventArgs e)
         {
             //new MainWindows.CaseWindow(new DataModels.Patient() { }).Show();

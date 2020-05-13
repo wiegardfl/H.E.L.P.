@@ -29,6 +29,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="ContextMenu" Value="{StaticResource patientContextMenu}" />
+                    <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
@@ -36,7 +37,7 @@
                     <GridView.Columns>
                         <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding FullName}" />
                         <GridViewColumn Header="KV-Nr." Width="178" DisplayMemberBinding="{Binding KVNR}" />
-                        <GridViewColumn Header="Geburtsdatum" Width="150" DisplayMemberBinding="{Binding DateOfBirth}" />
+                        <GridViewColumn Header="Geburtsdatum" Width="150" DisplayMemberBinding="{Binding BirthdayText}" />
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

@@ -19,6 +19,8 @@ namespace HELP.MainWindows
         {
             InitializeComponent();
 
+            this.DataContext = CaseData;
+
             // this.patient = patient;
             // systemCase = new Case(patient);
 
@@ -26,9 +28,9 @@ namespace HELP.MainWindows
             //lblNachname.Content = patient.LastName;
             //lblAlter.Content = patient.Age + " Jahr(e)";
 
-            DateTime now = DateTime.Now;
-            txtDatumAnkunft.Text = now.ToString("dd.MM.yyyy");
-            txtUhrzeitAnkunft.Text = now.ToString("HH:mm");
+            //DateTime now = DateTime.Now;
+            //txtDatumAnkunft.Text = now.ToString("dd.MM.yyyy");
+            //txtUhrzeitAnkunft.Text = now.ToString("HH:mm");
         }
 
         public CaseWindow(Case systemCase)
@@ -38,16 +40,19 @@ namespace HELP.MainWindows
             this.systemCase = systemCase;
             patient = systemCase.Data;
 
-            lblVorname.Content = patient.FirstName;
-            lblNachname.Content = patient.LastName;
-            lblAlter.Content = patient.Age + " Jahr(e)";
+            this.DataContext = systemCase;
+
+            //lblVorname.Content = patient.FirstName;
+            //lblNachname.Content = patient.LastName;
+            //lblAlter.Content = patient.Age + " Jahr(e)";
 
             cmbPrioritaet.SelectedValue = Convert.ToString(systemCase.Priority).Replace('_', ' ');
 
-            txtDatumAnkunft.Text = systemCase.Arrival.ToString("dd.MM.yyyy");
-            txtUhrzeitAnkunft.Text = systemCase.Arrival.ToString("HH:mm"); 
+            //txtDatumAnkunft.Text = systemCase.Arrival.ToString("dd.MM.yyyy");
+            //txtUhrzeitAnkunft.Text = systemCase.Arrival.ToString("HH:mm"); 
         }
 
+        public Case CaseData { get; private set; } = new Case(new Patient());
         private void btnSpeichern_Click(object sender, RoutedEventArgs e)
         {
             //Save changes in DataModel and DataBase
@@ -64,18 +69,23 @@ namespace HELP.MainWindows
             {
                 patient = patientList.GetSelectedPatient;
 
+                //CaseData.Data = patient;
                 systemCase = new Case(patient);
 
                 lblVorname.Content = patient.FirstName;
                 lblNachname.Content = patient.LastName;
                 lblAlter.Content = patient.Age + " Jahr(e)";
             }
-            //(new PatientList()).Show();
         }
 
         private void btnAbbrechen_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void btnDatenBearbeiten_Click(object sender, RoutedEventArgs e)
+        {
+            (new Form_Patient(systemCase.Data)).ShowDialog();
         }
     }
 }

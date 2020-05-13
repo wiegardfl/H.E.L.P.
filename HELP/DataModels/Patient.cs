@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HELP.DataModels
 {
-    public class Patient
+    public class Patient 
     {
         public string FullName
         {
@@ -31,8 +31,10 @@ namespace HELP.DataModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string KVNR { get; set; }
-        public string DateOfBirth { get; set; }
-        public int Age { get; set; }
+        public DateTime Birthday { get; set; }
+        public string BirthdayText => Birthday.ToString("dd.MM.yyyy");
+        public string PlaceOfBirth { get; set; }
+        public int Age => (int)((DateTime.Today - Birthday).Days / 365.25);
         public string Gender { get; set; }
         public string Nationality { get; set; }
         public string HealthInsurance { get; set; }

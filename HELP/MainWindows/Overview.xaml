@@ -50,20 +50,21 @@
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     </Style>
                 </ComboBox.Resources>
-                <ComboBoxItem Background="#FF0000">Stufe1</ComboBoxItem>
-                <ComboBoxItem Background="#FFA500">Stufe2</ComboBoxItem>
-                <ComboBoxItem Background="#FFFF00">Stufe3</ComboBoxItem>
-                <ComboBoxItem Background="#00FF00">Stufe4</ComboBoxItem>
-                <ComboBoxItem Background="#0000FF">Stufe5</ComboBoxItem>
+                <ComboBoxItem Background="#FF0000">Akut</ComboBoxItem>
+                <ComboBoxItem Background="#FFA500">Sehr Dringend</ComboBoxItem>
+                <ComboBoxItem Background="#FFFF00">Dringend</ComboBoxItem>
+                <ComboBoxItem Background="#00FF00">Normal</ComboBoxItem>
+                <ComboBoxItem Background="#0000FF">Nicht Dringend</ComboBoxItem>
             </ComboBox>
         </GroupBox>
 
         <GroupBox Grid.Column="2" Header="Patientenname" >
             <ComboBox>
+                <ComboBoxItem>Hans Müller</ComboBoxItem>
+                <ComboBoxItem>Bernd Müller</ComboBoxItem>
                 <ComboBoxItem>Max Mustermann</ComboBoxItem>
-                <ComboBoxItem>Markus Müller</ComboBoxItem>
-                <ComboBoxItem>Johanna Schmidt</ComboBoxItem>
-                <ComboBoxItem>Bernd Schäfer</ComboBoxItem>
+                <ComboBoxItem>Fabian Kerz</ComboBoxItem>
+                <ComboBoxItem>Sebastian Schmidt</ComboBoxItem>
             </ComboBox>
         </GroupBox>
 
