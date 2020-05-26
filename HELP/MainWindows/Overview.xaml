@@ -61,6 +61,7 @@
 
         <GroupBox Grid.Column="2" Header="Patientenname" >
             <ComboBox>
+                <ComboBoxItem >Alle</ComboBoxItem>
                 <ComboBoxItem>Hans Müller</ComboBoxItem>
                 <ComboBoxItem>Bernd Müller</ComboBoxItem>
                 <ComboBoxItem>Max Mustermann</ComboBoxItem>
@@ -69,18 +70,21 @@
             </ComboBox>
         </GroupBox>
 
-        <GroupBox Grid.Column="3" Header="Besucherzimmer">
+        <GroupBox Grid.Column="3" Header="Aufenthaltsort">
             <ComboBox>
-                <ComboBoxItem>Zimmer 1</ComboBoxItem>
-                <ComboBoxItem>Zimmer 2</ComboBoxItem>
-                <ComboBoxItem>Zimmer 3</ComboBoxItem>
-                <ComboBoxItem>Zimmer 4</ComboBoxItem>
-                <ComboBoxItem>Zimmer 5</ComboBoxItem>
+                <ComboBoxItem >Alle</ComboBoxItem>
+                <ComboBoxItem>Chirurgie</ComboBoxItem>
+                <ComboBoxItem>Orthopädie</ComboBoxItem>
+                <ComboBoxItem>Kardiologie</ComboBoxItem>
+                <ComboBoxItem>Gynäkologie</ComboBoxItem>
+                <ComboBoxItem>Pädiatrie</ComboBoxItem>
+                <!--<ComboBoxItem>Wartezimmer</ComboBoxItem>-->
             </ComboBox>
         </GroupBox>
 
         <GroupBox Grid.Column="4" Header="Status">
             <ComboBox>
+                <ComboBoxItem >Alle</ComboBoxItem>
                 <ComboBoxItem>Im Wartezimmer</ComboBoxItem>
                 <ComboBoxItem>In Behandlung</ComboBoxItem>
                 <ComboBoxItem>In Beobachtung</ComboBoxItem>
@@ -137,7 +141,7 @@
                     <GridViewColumn Header="Durchgangsnummer" Width="{Binding ElementName=Column4, Path=ActualWidth}" DisplayMemberBinding="{Binding CaseNr}" />
                     <GridViewColumn Header="Patientenname" Width="{Binding ElementName=Column5, Path=ActualWidth}" DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Alter" Width="{Binding ElementName=Column6, Path=ActualWidth}" DisplayMemberBinding="{Binding Age}" />
-                    <GridViewColumn Header="Behandlungszimmer" Width="{Binding ElementName=Column7, Path=ActualWidth}" DisplayMemberBinding="{Binding TreatmentRoom}" />
+                    <GridViewColumn Header="Aufenthaltsort" Width="{Binding ElementName=Column7, Path=ActualWidth}" DisplayMemberBinding="{Binding TreatmentRoom}" />
                     <GridViewColumn Header="Beschwerde" Width="{Binding ElementName=Column8, Path=ActualWidth}" DisplayMemberBinding="{Binding Complaint}" />
                     <GridViewColumn Header="Diagnose" Width="{Binding ElementName=Column9, Path=ActualWidth}" DisplayMemberBinding="{Binding Diagnosis}" />
                 </GridView>
