@@ -50,6 +50,7 @@
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     </Style>
                 </ComboBox.Resources>
+                <ComboBoxItem >Alle</ComboBoxItem>
                 <ComboBoxItem Background="#FF0000">Akut</ComboBoxItem>
                 <ComboBoxItem Background="#FFA500">Sehr Dringend</ComboBoxItem>
                 <ComboBoxItem Background="#FFFF00">Dringend</ComboBoxItem>
