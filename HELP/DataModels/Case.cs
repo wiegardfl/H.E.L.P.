@@ -48,6 +48,8 @@ namespace HELP.DataModels
 
         public Category Priority { get; set; }
 
+        public int PriorityInt => (int)Priority;
+
         public long CaseNr { get; }
 
         public string Name => data?.FullName;
@@ -86,7 +88,7 @@ namespace HELP.DataModels
     }
 
     // Red = Akut, Orange = Sehr Dringed, Yellow = Dringend, Green = Normal, Blue = Nicht Dringend
-    public enum Category { Akut = 0, Sehr_Dringend = 10, Dringend = 30, Normal = 90, Nicht_Dringend = 120 }
+    public enum Category { Akut = 5, Sehr_Dringend = 10, Dringend = 30, Normal = 90, Nicht_Dringend = 120 }
 
 
 }

@@ -116,6 +116,7 @@
     <Compile Include="DataAccess\Authentication.cs" />
     <Compile Include="DataAccess\MD5Hash.cs" />
     <Compile Include="DataModels\Case.cs" />
+    <Compile Include="DataModels\DynamicData.cs" />
     <Compile Include="DataModels\Patient.cs" />
     <Compile Include="Forms\Form_Patient.xaml.cs">
       <DependentUpon>Form_Patient.xaml</DependentUpon>
@@ -202,6 +203,14 @@
   <ItemGroup>
     <Resource Include="Resources\Images\HELP.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\Unsorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\SortedDescending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\SortedAscending.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
