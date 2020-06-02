@@ -71,6 +71,8 @@
                     <ComboBoxItem Content="BKK"/>
                     <ComboBoxItem Content="IKK"/>
                     <ComboBoxItem Content="DAK"/>
+                    <ComboBoxItem Content="Anderes"/>
+                    
                 </ComboBox>
 
                 <Label Content="KV-Nr." />
@@ -111,10 +113,10 @@
 
                     <StackPanel>
                         <Label  Content="Telefon"  />
-                        <TextBox x:Name="txtTelefon" Style="{StaticResource NumberBox}" Text="{Binding Phone}"/>
+                        <TextBox x:Name="txtTelefon" Style="{StaticResource NumberTel}" Text="{Binding Phone}"/>
 
                         <Label Content="Mobil"  />
-                        <TextBox x:Name="txtMobil" Style="{StaticResource NumberBox}" Text="{Binding Mobile}"/>
+                        <TextBox x:Name="txtMobil" Style="{StaticResource NumberTel}" Text="{Binding Mobile}"/>
                         
                         <Label  Content="Zusätzliche Informationen" />
                     </StackPanel>
@@ -162,10 +164,10 @@
                 </DockPanel>
                 
                 <Label x:Name="lblTelefonAnge" Content="Telefon"  />
-                <TextBox x:Name="txtTelefonAnge" Style="{StaticResource NumberBox}" Text="{Binding PhoneRelatives}"/>
+                <TextBox x:Name="txtTelefonAnge" Style="{StaticResource NumberTel}" Text="{Binding PhoneRelatives}"/>
                 
                 <Label x:Name="lblMobilAnge" Content="Mobil"  />
-                <TextBox x:Name="txtMobilAnge" Style="{StaticResource NumberBox}" Text="{Binding MobileRelatives}"/>
+                <TextBox x:Name="txtMobilAnge" Style="{StaticResource NumberTel}" Text="{Binding MobileRelatives}" />
             </StackPanel>
         </GroupBox>
 

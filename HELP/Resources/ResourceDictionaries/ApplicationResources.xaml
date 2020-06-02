@@ -10,7 +10,10 @@
     <Style TargetType="{x:Type TextBox}" x:Key="NumberBox" BasedOn="{StaticResource Standard}">
         <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput"/>
     </Style>
-    
+    <Style TargetType="{x:Type TextBox}" x:Key="NumberTel" BasedOn="{StaticResource Standard}">
+        <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput_Tel"/>
+    </Style>
+
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Margin" Value="5"/>
