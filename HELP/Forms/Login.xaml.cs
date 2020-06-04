@@ -126,9 +126,24 @@ namespace HELP.Forms
 
         private void dummyLogin()
         {
-            (new Overview()).Show();
+            if ("Schwester".Equals(Username.Text) && "password".Equals(Password.Password)) Overview.roleFlag = 1;
+            else if ("Arzt".Equals(Username.Text) && "password".Equals(Password.Password)) Overview.roleFlag = 2;
 
-            Close();
+            if (Overview.roleFlag > -1)
+            {
+                new Overview().Show();
+
+                Close();
+            } else
+            {
+                Username.Text = "";
+                Password.Password = "";
+                Error.Content = "Benutzername oder Passwort falsch!";
+
+                Error.Visibility = Visibility.Visible;
+            }
+
+            //(new Overview()).Show();
         }
     }
 }

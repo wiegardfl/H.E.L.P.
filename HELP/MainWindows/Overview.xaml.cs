@@ -18,6 +18,7 @@ namespace HELP.MainWindows
     public partial class Overview : Window
     {
         public static ObservableCollection<string> filterItems = new ObservableCollection<string>();
+        public static int roleFlag = -1;
 
         private ObservableCollection<Case> cases;
 
