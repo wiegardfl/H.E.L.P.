@@ -315,28 +315,28 @@
 
         <Grid Margin="10" Grid.ColumnSpan="6">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150*"/>
-                <ColumnDefinition Width="120*"/>
-                <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="158*"/>
-                <ColumnDefinition Width="167*"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="90*"/>
+                <ColumnDefinition Width="80*"/>
                 <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="227*"/>
+                <ColumnDefinition Width="110*"/>
+                <ColumnDefinition Width="90*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="145*"/>
+                <ColumnDefinition Width="145*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Name="Column0" />
-            <Grid Name="Column1" />
-            <Grid Name="Column2" />
-            <Grid Name="Column3" />
-            <Grid Name="Column4" />
-            <Grid Name="Column5" />
-            <Grid Name="Column6" />
-            <Grid Name="Column7" />
-            <Grid Name="Column8" />
-            <Grid Name="Column9" />
+            <Grid Name="Column1" Grid.Column="1" />
+            <Grid Name="Column2" Grid.Column="2" />
+            <Grid Name="Column3" Grid.Column="3" />
+            <Grid Name="Column4" Grid.Column="4" />
+            <Grid Name="Column5" Grid.Column="5" />
+            <Grid Name="Column6" Grid.Column="6" />
+            <Grid Name="Column7" Grid.Column="7" />
+            <Grid Name="Column8" Grid.Column="8" />
+            <Grid Name="Column9" Grid.Column="9" />
         </Grid>
     </Grid>
 </Window>
