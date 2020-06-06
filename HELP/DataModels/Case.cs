@@ -58,7 +58,7 @@ namespace HELP.DataModels
 
         public string LastName => data?.LastName;
 
-        public Patient Data { get => data; set { } }
+        public Patient Data { get => data; set { data = value; } }
         //public Patient Data => data;
 
         public DateTime Reevaluation { get; set; }

@@ -212,5 +212,14 @@
   <ItemGroup>
     <Resource Include="Resources\Images\SortedAscending.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Male.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Female.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Divers.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

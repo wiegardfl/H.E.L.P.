@@ -85,7 +85,15 @@ namespace HELP.MainWindows
 
         private void btnDatenBearbeiten_Click(object sender, RoutedEventArgs e)
         {
-            (new Form_Patient(systemCase.Data)).ShowDialog();
+            Patient copy = systemCase.Data.Clone();
+            Form_Patient patientWindow = new Form_Patient(systemCase.Data);
+
+            bool? result = patientWindow.ShowDialog();
+
+            if (result == false)
+            {
+                this.systemCase.Data = copy;
+            }
         }
     }
 }

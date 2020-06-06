@@ -86,9 +86,6 @@
             </Grid>
         </GroupBox> -->
 
-        <Button x:Name="NewCaseBtn" Grid.Row="1" Margin="30 15" Height="35" Content="Neuer Fall" Click="NewCaseBtn_Click" />
-        <Button x:Name="LogoutBtn" Grid.Row="1" Grid.Column="5" Margin="30 15" Height="35" Content="Abmelden" />
-
         <ListView Name="ListViewMain" Margin="10 10 10 0" Grid.ColumnSpan="6" SelectionMode="Single">
             <ListView.Resources>
                 <ContextMenu x:Key="CheckBoxFilterMenu" Width="150">
@@ -103,7 +100,7 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="ListBoxItem">
-                                                        <CheckBox Margin="5 2" IsChecked="True" Checked="Filter_Changed" Unchecked="Filter_Changed">
+                                                        <CheckBox Margin="5 2" IsChecked="true" Checked="Filter_Changed" Unchecked="Filter_Changed">
                                                             <ContentPresenter />
                                                         </CheckBox>
                                                     </ControlTemplate>
@@ -312,6 +309,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Button x:Name="NewCaseBtn" Grid.Row="1" Margin="30 15" Height="35" Content="Neuer Fall" Click="NewCaseBtn_Click" />
+        <Button x:Name="ResetListBtn" Grid.Row="1" Grid.Column="1"  Margin="30 15" Height="35" Content="Filter und Sortierung zurücksetzen" Click="ResetListBtn_Click" />
+        <Button x:Name="LogoutBtn" Grid.Row="1" Grid.Column="5" Margin="30 15" Height="35" Content="Abmelden" />
 
         <Grid Margin="10" Grid.ColumnSpan="6">
             <Grid.ColumnDefinitions>

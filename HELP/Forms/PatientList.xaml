@@ -35,9 +35,32 @@
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
+                        <GridViewColumn Width="30">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Width="30" Height="30">
+                                        <Image.Style>
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Gender}" Value="Maennlich">
+                                                        <Setter Property="Image.Source" Value="/Resources/Images/Male.jpg" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Gender}" Value="Weiblich">
+                                                        <Setter Property="Image.Source" Value="/Resources/Images/Female.jpg" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Gender}" Value="Divers">
+                                                        <Setter Property="Image.Source" Value="/Resources/Images/Divers.jpg" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding FullName}" />
                         <GridViewColumn Header="KV-Nr." Width="178" DisplayMemberBinding="{Binding KVNR}" />
-                        <GridViewColumn Header="Geburtsdatum" Width="150" DisplayMemberBinding="{Binding BirthdayText}" />
+                        <GridViewColumn Header="Geburtsdatum" Width="120" DisplayMemberBinding="{Binding BirthdayText}" />
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

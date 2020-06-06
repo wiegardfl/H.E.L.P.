@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 using HELP.DataModels;
 using HELP.MainWindows;
+using System.Collections.ObjectModel;
 
 namespace HELP.Forms
 {
@@ -17,13 +18,13 @@ namespace HELP.Forms
     {
         private Patient selectedPatient;
 
-        public static List<Patient> patients = new List<Patient>
+        public static ObservableCollection<Patient> patients = new ObservableCollection<Patient>
             {
-                new Patient { FullName = "Hans Müller", KVNR = "0123456789", Birthday = new DateTime(2000,1,1), PlaceOfBirth = "Fulda",  Gender = Genders.Maennlich.ToString(), Nationality = "Deutschland", HealthInsurance = "AOK", Address = "Hohenloher Str. 4", PostalCode = "36041", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
-                new Patient { FullName = "Bernd Müller", KVNR = "0551232133", Birthday = new DateTime(2000,1,1), PlaceOfBirth = "Frankfurt", Gender = Genders.Maennlich.ToString(), Nationality = "Österreich", HealthInsurance = "AOK", Address = "Stauferring 71", PostalCode = "36043", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
-                new Patient { FullName = "Max Mustermann", KVNR = "9876543210", Birthday = new DateTime(1985,11,7) , PlaceOfBirth = "München", Gender = Genders.Divers.ToString(), Nationality = "Belgien", HealthInsurance = "AOK", Address = "Heinrich Str. 16A", PostalCode = "36042", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
-                new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", Birthday = new DateTime(2005,3,6), PlaceOfBirth = "Paris",  Gender = Genders.Maennlich.ToString(), Nationality = "Russland", HealthInsurance = "AOK", Address = "Stauferring 71", PostalCode = "36039", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
-                new Patient { FullName = "Sebastian Schmidt", KVNR = "9524244571", Birthday = new DateTime(1996,9,15), PlaceOfBirth = "Hongkong", Gender = Genders.Weiblich.ToString(), Nationality = "Deutschland", HealthInsurance = "AOK", Address = "Frankfurter Str. 2", PostalCode = "36042", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"}
+                new Patient { FullName = "Hans Müller", KVNR = "0123456789", Birthday = new DateTime(2000,1,1), PlaceOfBirth = "Fulda",  Gender = Genders.Maennlich.ToString(), Nationality = "Deutsch", HealthInsurance = "AOK", Address = "Hohenloher Str. 4", PostalCode = "36041", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
+                new Patient { FullName = "Bernd Müller", KVNR = "0551232133", Birthday = new DateTime(2000,1,1), PlaceOfBirth = "Frankfurt", Gender = Genders.Maennlich.ToString(), Nationality = "Deutsch", HealthInsurance = "AOK", Address = "Stauferring 71", PostalCode = "36043", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
+                new Patient { FullName = "Max Mustermann", KVNR = "9876543210", Birthday = new DateTime(1985,11,7) , PlaceOfBirth = "München", Gender = Genders.Divers.ToString(), Nationality = "Bulgarisch", HealthInsurance = "AOK", Address = "Heinrich Str. 16A", PostalCode = "36042", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
+                new Patient { FullName = "Fabian Kerz", KVNR = "1122336475", Birthday = new DateTime(2005,3,6), PlaceOfBirth = "Paris",  Gender = Genders.Maennlich.ToString(), Nationality = "Russisch", HealthInsurance = "AOK", Address = "Stauferring 71", PostalCode = "36039", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"},
+                new Patient { FullName = "Sabine Schmidt", KVNR = "9524244571", Birthday = new DateTime(1996,9,15), PlaceOfBirth = "Hongkong", Gender = Genders.Weiblich.ToString(), Nationality = "Deutsch", HealthInsurance = "AOK", Address = "Frankfurter Str. 2", PostalCode = "36042", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754"}
             };
 
         public PatientList()
@@ -35,6 +36,7 @@ namespace HELP.Forms
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(PatientsListView.ItemsSource);
 
             view.Filter = Filter;
+
             Loaded += (sender, e) => Keyboard.Focus(Search);
         }
 

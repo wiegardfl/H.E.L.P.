@@ -21,6 +21,7 @@ namespace HELP.MainWindows
         public static int roleFlag = -1;
 
         private ObservableCollection<Case> cases;
+        private List<string> filters;
 
         private Filters selectedFilter;
 
@@ -33,6 +34,7 @@ namespace HELP.MainWindows
         public Overview()
         {
             cases = new ObservableCollection<Case>();
+            filters = new List<string>();
             filterValues = new Dictionary<string, bool>();
             caseFilter = "";
             patientFilter = "";
@@ -91,16 +93,19 @@ namespace HELP.MainWindows
             {
                 filterItems.Add(item);
                 filterValues.Add(item, true);
+                filters.Add(item);
             }
 
             foreach (string item in DynamicData.statuses)
             {
                 filterValues.Add(item, true);
+                filters.Add(item);
             }
 
             foreach (string item in DynamicData.treatmentRooms)
             {
                 filterValues.Add(item, true);
+                filters.Add(item);
             }
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewMain.ItemsSource);
@@ -295,6 +300,40 @@ namespace HELP.MainWindows
             }
         }
 
+        public void ResetListBtn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (string key in filters)
+            {
+                filterValues[key] = true;
+            }
+
+            selectedFilter = Filters.NONE;
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewMain.ItemsSource);
+
+            view.SortDescriptions.Clear();
+
+            string[] sortedColumns = { "PriorityInt", "ArrivalFormatted", "Age", "Name" };
+
+            foreach (string binding in sortedColumns)
+            {
+                view.SortDescriptions.Add(new SortDescription(binding, ListSortDirection.Ascending));
+            }
+
+            foreach (GridViewColumn column in ((GridView)ListViewMain.View).Columns)
+            {
+                Image sortIcon = ((Image)((StackPanel)((GridViewColumnHeader)column.Header).Content).Children[0]);
+
+                if (column.DisplayMemberBinding == null ? true : sortedColumns.Contains(((Binding)column.DisplayMemberBinding).Path.Path))
+                {
+                    sortIcon.Source = new BitmapImage(new Uri(@"/Resources/Images/SortedAscending.png", UriKind.Relative));
+                } else
+                {
+                    sortIcon.Source = new BitmapImage(new Uri(@"/Resources/Images/Unsorted.png", UriKind.Relative));
+                }
+            }
+        }
+
         private void Filter_Changed(object sender, RoutedEventArgs e)
         {
             //string key = ((ContentPresenter)((CheckBox)sender).Content).Content.ToString();
@@ -324,7 +363,8 @@ namespace HELP.MainWindows
         {
             PRIORITY,
             STATUS,
-            TREATMENTROOM
+            TREATMENTROOM,
+            NONE
         }
     }
 }

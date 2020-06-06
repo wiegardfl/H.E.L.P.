@@ -35,10 +35,10 @@
         <GroupBox Grid.Column="0" Header="Personendaten">
             <StackPanel>
                 <Label Content="Vorname" />
-                <TextBox x:Name="txtVorname" Text="{Binding FirstName}"/>
+                <TextBox x:Name="txtVorname" Text="{Binding FirstName}" Style="{StaticResource AplhabeticalBox}" />
                 
                 <Label Content="Nachname" />
-                <TextBox x:Name="txtNachname" Text="{Binding LastName}"/>
+                <TextBox x:Name="txtNachname" Text="{Binding LastName}" Style="{StaticResource AplhabeticalBox}" />
                 
                 <Label  Content="Geschlecht"  />
                 <ComboBox x:Name="cmbGeschlecht" SelectedValuePath="Content">
@@ -51,10 +51,10 @@
                 <DatePicker FontSize="12" Language="DE-de" DisplayDateStart="1900-01-01" DisplayDateEnd="2099-12-31" SelectedDate="{Binding Birthday}"/>
 
                 <Label Content="Geburtsort"  />
-                <TextBox x:Name="txtGeburtsort" Text="{Binding PlaceOfBirth}"/>
+                <TextBox x:Name="txtGeburtsort" Text="{Binding PlaceOfBirth}" Style="{StaticResource AplhabeticalBox}" />
 
                 <Label Content="Nationalität"   />
-                <ComboBox x:Name="cmbNationalitaet">
+                <ComboBox x:Name="cmbNationalitaet" SelectedValuePath="Content">
                     <ComboBoxItem Content="Afghanisch"/>
                     <ComboBoxItem Content="Ägyptisch"/>
                     <ComboBoxItem Content="Albanisch"/>
@@ -65,7 +65,7 @@
                 </ComboBox>
 
                 <Label Content="Krankenkasse"  />
-                <ComboBox x:Name="cmbKrankenkasse" >
+                <ComboBox x:Name="cmbKrankenkasse" SelectedValuePath="Content">
                     <ComboBoxItem Content="AOK"/>
                     <ComboBoxItem Content="Barmer"/>
                     <ComboBoxItem Content="BKK"/>
@@ -74,7 +74,7 @@
                 </ComboBox>
 
                 <Label Content="KV-Nr." />
-                <TextBox x:Name="txtKVNr" Text="{Binding KVNR}"/>
+                <TextBox x:Name="txtKVNr" Text="{Binding KVNR}" MaxLength="10" Style="{StaticResource AlphabitcalAndNumberBox}" />
             </StackPanel>
         </GroupBox>
 
@@ -86,7 +86,7 @@
             <GroupBox Grid.Row="0" Header="Anschrift">
                 <StackPanel>
                     <Label Content="Adresse"  />
-                    <TextBox x:Name="txtAdresse" Text="{Binding Address}" />
+                    <TextBox x:Name="txtAdresse" Text="{Binding Address}" Style="{StaticResource AlphabitcalAndNumberBox}" />
 
                     <DockPanel HorizontalAlignment="Stretch">
                         <StackPanel>
@@ -96,7 +96,7 @@
 
                         <StackPanel Margin="10 0 0 0">
                             <Label Content="Ort"  />
-                            <TextBox x:Name="txtOrt" Text="{Binding City}"/>
+                            <TextBox x:Name="txtOrt" Text="{Binding City}" Style="{StaticResource AplhabeticalBox}" />
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>
@@ -111,10 +111,10 @@
 
                     <StackPanel>
                         <Label  Content="Telefon"  />
-                        <TextBox x:Name="txtTelefon" Style="{StaticResource NumberBox}" Text="{Binding Phone}"/>
+                        <TextBox x:Name="txtTelefon" Style="{StaticResource NumberTel}" Text="{Binding Phone}"/>
 
                         <Label Content="Mobil"  />
-                        <TextBox x:Name="txtMobil" Style="{StaticResource NumberBox}" Text="{Binding Mobile}"/>
+                        <TextBox x:Name="txtMobil" Style="{StaticResource NumberTel}" Text="{Binding Mobile}"/>
                         
                         <Label  Content="Zusätzliche Informationen" />
                     </StackPanel>
@@ -127,7 +127,7 @@
         <GroupBox Grid.Column="2" Header="Angehörige (bei Minderjährigen oder Entmündigten)">
             <StackPanel>
                 <Label x:Name="lblFunktion" Content="Funktion" />
-                <ComboBox x:Name="cmFunktion">
+                <ComboBox x:Name="cmFunktion" SelectedValuePath="Content">
                     <ComboBoxItem Content="Mutter"/>
                     <ComboBoxItem Content="Vater"/>
                     <ComboBoxItem Content="Großvater"/>
@@ -139,13 +139,13 @@
                 </ComboBox>
                 
                 <Label x:Name="lblVornameAnge" Content="Vorname"  />
-                <TextBox x:Name="txtVornameAnge" Text="{Binding FirstNameRelatives}" />
+                <TextBox x:Name="txtVornameAnge" Text="{Binding FirstNameRelatives}" Style="{StaticResource AplhabeticalBox}" />
 
                 <Label x:Name="lblNachnameAnge" Content="Nachname"  />
-                <TextBox x:Name="txtNachnameAnge" Text="{Binding LastNameRelatives}" />
+                <TextBox x:Name="txtNachnameAnge" Text="{Binding LastNameRelatives}" Style="{StaticResource AplhabeticalBox}" />
 
                 <Label x:Name="lblAdresseAnge" Content="Adresse"  />
-                <TextBox x:Name="txtAdresseAnge" Text="{Binding AddressRelatives}" />
+                <TextBox x:Name="txtAdresseAnge" Text="{Binding AddressRelatives}" Style="{StaticResource AlphabitcalAndNumberBox}" />
 
                 <DockPanel HorizontalAlignment="Stretch">
                     <StackPanel>
@@ -157,21 +157,21 @@
 
                     <StackPanel>
                         <Label x:Name="lblOrtAnge" Content="Ort" />
-                        <TextBox x:Name="txtOrtAnge" Text="{Binding CityRelatives}"/>
+                        <TextBox x:Name="txtOrtAnge" Text="{Binding CityRelatives}" Style="{StaticResource AplhabeticalBox}" />
                     </StackPanel>
                 </DockPanel>
                 
                 <Label x:Name="lblTelefonAnge" Content="Telefon"  />
-                <TextBox x:Name="txtTelefonAnge" Style="{StaticResource NumberBox}" Text="{Binding PhoneRelatives}"/>
+                <TextBox x:Name="txtTelefonAnge" Style="{StaticResource NumberTel}" Text="{Binding PhoneRelatives}"/>
                 
                 <Label x:Name="lblMobilAnge" Content="Mobil"  />
-                <TextBox x:Name="txtMobilAnge" Style="{StaticResource NumberBox}" Text="{Binding MobileRelatives}"/>
+                <TextBox x:Name="txtMobilAnge" Style="{StaticResource NumberTel}" Text="{Binding MobileRelatives}"/>
             </StackPanel>
         </GroupBox>
 
         <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button x:Name="btnSpeichern" Width="100" Content="Speichern" Margin="20 0" Click="BtnSpeichern_Click"/>
-            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" IsCancel="True" Click="btnAbbrechen_Click"/>
+            <Button x:Name="btnAbbrechen" Width="100" Content="Abbrechen" Click="btnAbbrechen_Click"/>
         </StackPanel>
 
     </Grid>

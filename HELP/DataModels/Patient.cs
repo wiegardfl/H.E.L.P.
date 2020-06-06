@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace HELP.DataModels
 {
-    public class Patient 
+    public class Patient : ICloneable
     {
+        public Patient Clone()
+        {
+            return (Patient)this.MemberwiseClone();
+        }
+
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
         public string FullName
         {
             get => $"{FirstName} {LastName}";
@@ -28,29 +38,30 @@ namespace HELP.DataModels
             }
         }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string KVNR { get; set; }
-        public DateTime Birthday { get; set; }
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
+        public string KVNR { get; set; } = "";
+        public DateTime Birthday { get; set; } = new DateTime();
         public string BirthdayText => Birthday.ToString("dd.MM.yyyy");
-        public string PlaceOfBirth { get; set; }
+        public string PlaceOfBirth { get; set; } = "";
         public int Age => (int)((DateTime.Today - Birthday).Days / 365.25);
-        public string Gender { get; set; }
-        public string Nationality { get; set; }
-        public string HealthInsurance { get; set; }
-        public string Address { get; set; }
-        public string PostalCode { get; set; }
-        public string City { get; set; }
-        public string Phone { get; set; }
-        public string Mobile { get; set; }
-        public string AdditionalInformation { get; set; }
-        public string FirstNameRelatives { get; set; }
-        public string LastNameRelatives { get; set; }
-        public string AddressRelatives { get; set; }
-        public string PostalCodeRelatives { get; set; }
-        public string CityRelatives { get; set; }
-        public string PhoneRelatives { get; set; }
-        public string MobileRelatives { get; set; }
+        public string Gender { get; set; } = "";
+        public string Nationality { get; set; } = "";
+        public string HealthInsurance { get; set; } = "";
+        public string Address { get; set; } = "";
+        public string PostalCode { get; set; } = "";
+        public string City { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Mobile { get; set; } = "";
+        public string AdditionalInformation { get; set; } = "";
+        public string FunctionRelatives { get; set; } = "";
+        public string FirstNameRelatives { get; set; } = "";
+        public string LastNameRelatives { get; set; } = "";
+        public string AddressRelatives { get; set; } = "";
+        public string PostalCodeRelatives { get; set; } = "";
+        public string CityRelatives { get; set; } = "";
+        public string PhoneRelatives { get; set; } = "";
+        public string MobileRelatives { get; set; } = "";
     }
 
     public enum Genders { Maennlich = 0, Weiblich = 1, Divers = 2 }
