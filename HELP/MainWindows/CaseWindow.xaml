@@ -19,6 +19,10 @@
             <Setter Property="Width" Value="30"/>
             <Setter Property="MaxLength" Value="3"/>
         </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource NumberKoerpertemperatur}" x:Key="Vitals4">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="MaxLength" Value="4"/>
+        </Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource NumberBox}" x:Key="DateTime">
             <Setter Property="Width" Value="100"/>
         </Style>
@@ -35,7 +39,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="139*"/>
+            <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -47,7 +52,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Patient" Grid.Row="0">
+        <GroupBox Header="Patient" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,5,4.6,5.2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -79,7 +84,7 @@
             </Grid>
         </GroupBox >
 
-        <GroupBox Grid.Row="1" Header="Eingangsdaten">
+        <GroupBox Grid.Row="1" Header="Eingangsdaten" Grid.ColumnSpan="2" Margin="5,4.8,4.6,4.8">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -115,7 +120,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="2" Header="Vitalparameter">
+        <GroupBox Grid.Row="2" Header="Vitalparameter" Grid.ColumnSpan="2" Margin="5,5.2,4.6,4.8">
             <StackPanel>
                 <DockPanel>
                     <Label x:Name="lblVorherigeWerte" Content="Vorherige Werte:"  />
@@ -149,19 +154,19 @@
                     <!--Daten zur Körpertemperatur-->
                     <Separator Width="35" />
                     <Label Content="Körpertemperatur:" />
-                    <TextBox x:Name="txtKoerpertemperatur" Style="{StaticResource Vitals2}"/>
-                    <Label Content="Cº"  />
+                    <TextBox x:Name="txtKoerpertemperatur" Style="{StaticResource Vitals4}" Width="36"/>
+                    <Label Content="Cº" Width="22"  />
 
                     <!--Daten zur Sauerstoffsättigung-->
-                    <Separator Width="35"/>
-                    <Label Content="Sauerstoffsättigung (SpO2):"  />
+                    <Separator Width="20"/>
+                    <Label Content="Sauerstoffsättigung (SpO2):" Width="152"  />
                     <TextBox x:Name="txtSauerstoff" Style="{StaticResource Vitals3}" />
                     <Label Content="%" />
                 </DockPanel>
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Grid.Row="3" Header="Durchgangsdaten">
+        <GroupBox Grid.Row="3" Header="Durchgangsdaten" Grid.ColumnSpan="2" Margin="5,5.2,4.6,4.6">
             <StackPanel>
                 <!--Enabled für Krankenschwestern und Ärzte-->
                 <Label  Content="Sonstige Informationen"  />
@@ -196,7 +201,7 @@
         </GroupBox>
 
         <!--Enabled für Ärzte-->
-        <GroupBox Grid.Row="4" Header="Entlassungsdaten">
+        <GroupBox Grid.Row="4" Header="Entlassungsdaten" Grid.ColumnSpan="2" Margin="5,5.4,4.6,5.4">
             <StackPanel>
                 <DockPanel HorizontalAlignment="Stretch">
                     <StackPanel>
@@ -230,7 +235,7 @@
             </StackPanel>
         </GroupBox>
 
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,9.6,9.6,10.2" Grid.ColumnSpan="2" Width="390">
             <!--Enabled für Krankenschwestern und Ärzte-->
             <Button x:Name="btnSpeichern" Width="100" Content="Speichern"  Click="btnSpeichern_Click"/>
             <!--Enabled für Krankenschwestern und Ärzte-->

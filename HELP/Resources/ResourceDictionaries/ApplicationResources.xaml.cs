@@ -23,5 +23,9 @@ namespace HELP.Resources.ResourceDictionaries
         {
             if (new System.Text.RegularExpressions.Regex("[^0-9 /-]").IsMatch(e.Text)) e.Handled = true;
         }
+        private void TextBox_PreviewTextInput_Koerpertemperatur(object sender, TextCompositionEventArgs e)
+        {
+            if (new System.Text.RegularExpressions.Regex("[^0-9 .,]").IsMatch(e.Text)) e.Handled = true;
+        }
     }
 }

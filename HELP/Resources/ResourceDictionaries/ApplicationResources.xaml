@@ -13,6 +13,9 @@
     <Style TargetType="{x:Type TextBox}" x:Key="NumberTel" BasedOn="{StaticResource Standard}">
         <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput_Tel"/>
     </Style>
+    <Style TargetType="{x:Type TextBox}" x:Key="NumberKoerpertemperatur" BasedOn="{StaticResource Standard}">
+        <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput_Koerpertemperatur"/>
+    </Style>
 
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="FontSize" Value="14"/>
