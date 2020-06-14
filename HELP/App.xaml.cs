@@ -1,11 +1,13 @@
-﻿using System.Windows;
+﻿#region References
+using System.Windows;
+#endregion
 
 namespace HELP
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
     public partial class App : Application
     {
+        #region Properties
+        public static byte Role { get; set; } = 0;
+        #endregion
     }
 }
