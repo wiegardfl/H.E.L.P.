@@ -56,6 +56,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="35" />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -64,7 +65,15 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <GroupBox Header="Patient">
+                <WrapPanel Margin="10 0 0 0" VerticalAlignment="Bottom">
+                    <Label Content="Eröffnet durch:" />
+                    <Label Content="{Binding NurseFullName}" />
+                    <Separator Width="30" />
+                    <Label Content="Zuständiger Arzt:" />
+                    <Label Content="{Binding MedicalFullName}" />
+                </WrapPanel>
+                
+                <GroupBox Grid.Row="1" Header="Patient">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -107,7 +116,7 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox x:Name="regionArrivalData" Grid.Row="1" Header="Eingangsdaten">
+                <GroupBox x:Name="regionArrivalData" Grid.Row="2" Header="Eingangsdaten">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -130,21 +139,21 @@
                             </WrapPanel>
 
                             <Label Grid.Row="1" Margin="0 2" Content="Hauptproblem" />
-                            <TextBox Grid.Row="2" MaxHeight="93" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Complaint}" />
+                            <TextBox x:Name="txtComplaint" Grid.Row="2" MaxHeight="93" IsEnabled="False" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Complaint}" />
                         </Grid>
 
                         <StackPanel Grid.Column="1">
                             <Label Content="Art der Ankunft" />
-                            <TextBox TextWrapping="Wrap" Text="{Binding TypeOfArrival}" />
+                            <TextBox x:Name="txtTypeOfArrival" IsEnabled="False" TextWrapping="Wrap" Text="{Binding TypeOfArrival}" />
                             <Label Content="Herkunftsort" />
-                            <TextBox TextWrapping="Wrap" Text="{Binding PlaceOfIncident}" />
+                            <TextBox x:Name="txtPlaceOfIncident" IsEnabled="False" TextWrapping="Wrap" Text="{Binding PlaceOfIncident}" />
                             <Label Content="Trauma" />
-                            <TextBox TextWrapping="Wrap" Text="{Binding Trauma}" />
+                            <TextBox x:Name="txtTrauma" IsEnabled="False" TextWrapping="Wrap" Text="{Binding Trauma}" />
                         </StackPanel>
                     </Grid>
                 </GroupBox>
 
-                <GroupBox x:Name="regionVitalParameters" Grid.Row="2" Header="Vitalparameter">
+                <GroupBox x:Name="regionVitalParameters" Grid.Row="3" Header="Vitalparameter">
                     <StackPanel>
                         <DockPanel>
                             <Label Content="Vorherige Werte:" />
@@ -191,7 +200,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox x:Name="regionMedicalData" Grid.Row="3" Header="Durchgangsdaten">
+                <GroupBox x:Name="regionMedicalData" Grid.Row="4" Header="Durchgangsdaten">
                     <StackPanel>
                         <Label Content="Sonstige Informationen" />
                         <TextBox Text="{Binding OtherInformations}" />
@@ -212,7 +221,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox x:Name="regionReleaseData" Grid.Row="4" Header="Entlassungsdaten">
+                <GroupBox x:Name="regionReleaseData" Grid.Row="5" Header="Entlassungsdaten">
                     <StackPanel>
                         <DockPanel HorizontalAlignment="Stretch">
                             <StackPanel>
@@ -242,7 +251,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <StackPanel Grid.Row="5" Margin="10" HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel Grid.Row="6" Margin="10" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button x:Name="btnSave" Width="100" Content="Speichern" Click="BtnSave_Click" />
                     <Button x:Name="btnCancel" Width="100" Margin="20 0" Content="Abbrechen" Click="BtnCancel_Click" />
                     <Button x:Name="btnReleasePatient" Width="150" IsEnabled="False" Content="Patient entlassen" Click="BtnReleasePatient_Click" />

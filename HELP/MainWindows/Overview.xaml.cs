@@ -21,6 +21,7 @@ namespace HELP.MainWindows
     {
         #region Variables
         private BackgroundWorker reevaluationWorker;
+        private bool continueReevaluation;
         #endregion
 
         #region Constructors
@@ -28,13 +29,30 @@ namespace HELP.MainWindows
         {
             InitializeComponent();
 
-            InitDummyData();
+            continueReevaluation = false;
+
+            //InitDummyData();
             LoadData();
             InitFilters();
 
             this.reevaluationWorker = new BackgroundWorker();
 
-            if (App.Role == 1) InitReevaluationCheck();
+            if (App.Role == 1)
+            {
+                continueReevaluation = true;
+
+                InitReevaluationCheck();
+            } else if (App.Role == 2)
+            {
+                this.btnNewCase.IsEnabled = false;
+            }
+
+            Closing += (sender, e) =>
+            {
+                if (App.CloseState == 0) Application.Current.Shutdown();
+            };
+
+            Closed += (sender, e) => App.CloseState = 0;
         }
         #endregion
 
@@ -113,9 +131,17 @@ namespace HELP.MainWindows
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
-            App.Role = 0;
+            continueReevaluation = false;
 
-            new Login().Show();
+            App.CloseState = 1;
+            App.Role = 0;
+            App.FullNameUser = "";
+
+            App.DBConnection.StopDynamicDataLoading();
+            DynamicData.Patients.Clear();
+            DynamicData.Cases.Clear();
+
+            new Login(false).Show();
 
             this.Close();
         }
@@ -293,12 +319,14 @@ namespace HELP.MainWindows
                     }
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
         }
 
         private void ReevaluationTaskCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (!continueReevaluation) return;
+
             Case result = (Case)e.Result;
 
             MessageBox.Show("Es sollte nach dem Patienten " + result.Name + " (" + result.CaseNr + ") geschaut werden!", "Erinnerung");
@@ -307,6 +335,8 @@ namespace HELP.MainWindows
             {
                 if (DynamicData.Cases[i].CaseNr.Equals(result.CaseNr)) DynamicData.Cases[i].Reevaluation = DateTime.Now.AddMinutes(result.PriorityInt);
             }
+
+            App.DBConnection.UpdateReevaluationTimer(result.CaseNr, DateTime.Now.AddMinutes(result.PriorityInt));
 
             listViewMain.Items.Refresh();
 

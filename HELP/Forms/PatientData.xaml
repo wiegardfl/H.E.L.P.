@@ -54,7 +54,7 @@
                         <DatePicker Language="DE-de" DisplayDateStart="1900-01-01" DisplayDateEnd="2099-12-31" SelectedDate="{Binding Birthday}" FontSize="12" />
 
                         <Label Content="Geburtsort" />
-                        <TextBox Text="{Binding PlaceOfBirth}" Style="{StaticResource LettersBox}" />
+                        <TextBox MaxLength="60" Text="{Binding PlaceOfBirth}" Style="{StaticResource LettersBox}" />
 
                         <Label Content="Nationalität" />
                         <ComboBox ItemsSource="{x:Static data:DynamicData.Nationalities}" SelectedValuePath="Content" SelectedItem="{Binding Nationality}" />
@@ -76,7 +76,7 @@
                     <GroupBox Header="Anschrift">
                         <StackPanel>
                             <Label Content="Adresse" />
-                            <TextBox MaxLength="100" Text="{Binding Address}" Style="{StaticResource LettersAndNumbersBox}" />
+                            <TextBox MaxLength="100" Text="{Binding Address}" />
 
                             <DockPanel HorizontalAlignment="Stretch">
                                 <StackPanel>

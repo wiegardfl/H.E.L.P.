@@ -11,7 +11,7 @@ namespace HELP.DataModels
     public class Case : INotifyPropertyChanged, ICloneable
     {
         #region Variables
-        private static int dailySerialNr = 0;
+        //private static int dailySerialNr = 0;
         private static DateTime currentDay;
         #endregion
 
@@ -20,9 +20,9 @@ namespace HELP.DataModels
         {
             this.Data = patient;
 
-            CurrentDay = Arrival.Date;
+            //CurrentDay = Arrival.Date;
 
-            this.CaseNr = long.Parse(Arrival.ToString("yyMMdd0000")) + ++dailySerialNr;
+            //this.CaseNr = long.Parse(Arrival.ToString("yyMMdd0000")) + ++dailySerialNr;
         }
         #endregion
 
@@ -40,7 +40,7 @@ namespace HELP.DataModels
 
         #region Properties
         public Patient Data { get; set; } = new Patient();
-        public DateTime Arrival { get; private set; } = DateTime.Now;
+        public DateTime Arrival { get; set; } = DateTime.Now;
         public string ArrivalFormatted => Arrival.ToString("dd.MM.yyyy HH:mm");
         public string ArrivalDateFormatted { get => Arrival.ToString("dd.MM.yyyy"); set { } }
         public string ArrivalTimeFormatted { get => Arrival.ToString("HH:mm"); set { } }
@@ -55,7 +55,7 @@ namespace HELP.DataModels
         public string ExternalServices { get; set; } = "";
         public string Priority { get; set; } = "";
         public int PriorityInt => DynamicData.Priorities[Priority];
-        public long CaseNr { get; private set; } = -1;
+        public long CaseNr { get; set; } = 0;
         public string FirstName => Data?.FirstName;
         public string LastName => Data?.LastName;
         public string Name => Data?.FullName;
@@ -69,6 +69,11 @@ namespace HELP.DataModels
         public string Diagnosis { get; set; } = "";
         public string TypeOfRelease { get; set; } = "";
         public bool AnonymousPatient { get; set; } = false;
+        public int MedicalId { get; set; } = 0;
+        public string MedicalFullName { get; set; } = "";
+        public int NurseId { get; set; } = 0;
+        public string NurseFullName { get; set; } = "";
+        public string CaseStatus { get; set; } = "Open";
 
         public ObservableCollection<VitalParameters> PreviousVitalParameters { get; set; } = new ObservableCollection<VitalParameters>();
 
@@ -88,18 +93,18 @@ namespace HELP.DataModels
             private set { }
         }
 
-        private static DateTime CurrentDay
-        {
-            get => currentDay;
-            set
-            {
-                if (value != currentDay)
-                {
-                    currentDay = value;
-                    dailySerialNr = 0;
-                }
-            }
-        }
+        //private static DateTime CurrentDay
+        //{
+        //    get => currentDay;
+        //    set
+        //    {
+        //        if (value != currentDay)
+        //        {
+        //            currentDay = value;
+        //            dailySerialNr = 0;
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Interface Implementation

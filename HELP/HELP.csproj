@@ -46,10 +46,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataAccess\AES.cs" />
+    <Compile Include="DataAccess\Connection.cs" />
+    <Compile Include="DataAccess\MD5Hash.cs" />
     <Compile Include="DataModels\Case.cs" />
     <Compile Include="DataModels\DynamicData.cs" />
     <Compile Include="DataModels\Patient.cs" />
     <Compile Include="DataModels\VitalParameters.cs" />
+    <Compile Include="Forms\LoadingWindow.xaml.cs">
+      <DependentUpon>LoadingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PatientData.xaml.cs">
       <DependentUpon>PatientData.xaml</DependentUpon>
     </Compile>
@@ -110,11 +116,16 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Forms\LoadingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,8 +179,6 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Divers.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataAccess\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

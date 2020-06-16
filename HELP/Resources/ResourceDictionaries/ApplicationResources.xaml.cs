@@ -25,22 +25,22 @@ namespace HELP.Resources.ResourceDictionaries
 
         private void PhoneBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (new System.Text.RegularExpressions.Regex("[^0-9 /-]").IsMatch(e.Text)) e.Handled = true;
+            if (new Regex("[^0-9 /-]").IsMatch(e.Text)) e.Handled = true;
         }
 
         private void LettersBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (new System.Text.RegularExpressions.Regex("[^A-Z a-z]").IsMatch(e.Text)) e.Handled = true;
+            if (new Regex("[^A-Z a-zäöü]").IsMatch(e.Text)) e.Handled = true;
         }
 
         private void LettersAndNumbersBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (new System.Text.RegularExpressions.Regex("[^A-Z a-z0-9]").IsMatch(e.Text)) e.Handled = true;
+            if (new Regex("[^A-Z a-z0-9äöü]").IsMatch(e.Text)) e.Handled = true;
         }
 
         private void NumbersAndSignsBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (new System.Text.RegularExpressions.Regex("[^0-9 .,]").IsMatch(e.Text)) e.Handled = true;
+            if (new Regex("[^0-9 .,]").IsMatch(e.Text)) e.Handled = true;
         }
         #endregion
 

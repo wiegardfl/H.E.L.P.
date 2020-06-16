@@ -1,5 +1,6 @@
 ﻿#region References
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using HELP.DataModels;
@@ -18,6 +19,15 @@ namespace HELP.MainWindows
             EnableRoleSpecificRegions();
 
             this.NewCase = true;
+
+            this.txtComplaint.IsEnabled = true;
+            this.txtTypeOfArrival.IsEnabled = true;
+            this.txtPlaceOfIncident.IsEnabled = true;
+            this.txtTrauma.IsEnabled = true;
+
+            App.Editing = true;
+
+            Closed += (sender, e) => App.Editing = false;
         }
 
         public CaseWindow(Case listCase)
@@ -34,6 +44,12 @@ namespace HELP.MainWindows
             this.checkPatientAnonymous.IsEnabled = false;
             this.btnAddNewParameters.IsEnabled = true;
             this.btnReleasePatient.IsEnabled = App.Role == 1 ? false : true;
+
+            if (this.SystemCase.Data.PatientNr == 1) this.btnEditData.IsEnabled = false;
+
+            App.Editing = true;
+
+            Closed += (sender, e) => App.Editing = false;
         }
         #endregion
 
@@ -57,7 +73,7 @@ namespace HELP.MainWindows
         {
             if (((CheckBox)sender).IsChecked == true)
             {
-                this.SystemCase = new Case(new Patient() { FirstName = "Unbekannter", LastName = "Patient" }) { AnonymousPatient = true };
+                this.SystemCase = new Case(new Patient() { PatientNr = 1, FirstName = "Unbekannter", LastName = "Patient" }) { AnonymousPatient = true };
                 this.DataContext = this.SystemCase;
                 this.btnSearchPatient.IsEnabled = false;
                 this.btnEditData.IsEnabled = false;
@@ -143,7 +159,9 @@ namespace HELP.MainWindows
             if (this.txtTemperature.Text.Trim().Length == 0) { newVitalParameters.Temperature = null; } else { newVitalParameters.Temperature = double.Parse(this.txtTemperature.Text.Replace(".", ",")); }
             if (this.txtOxygenSaturation.Text.Trim().Length == 0) { newVitalParameters.OxygenSaturation = null; } else { newVitalParameters.OxygenSaturation = int.Parse(this.txtOxygenSaturation.Text); }
 
-            SystemCase.PreviousVitalParameters.Add(newVitalParameters);
+            if (!this.NewCase) App.DBConnection.AddVitalParameters(this.SystemCase.CaseNr, newVitalParameters);
+
+            this.SystemCase.PreviousVitalParameters.Add(newVitalParameters);
 
             this.cmbVitalParametersBox.Items.Clear();
             this.cmbVitalParametersBox.ItemsSource = SystemCase.VitalParametersTimes;
@@ -189,6 +207,10 @@ namespace HELP.MainWindows
             }
 
             this.SystemCase.Released = DateTime.Now;
+            this.SystemCase.CaseStatus = "Closed";
+
+            App.DBConnection.UpdateCase(this.SystemCase);
+            App.DBConnection.CloseCase(this.SystemCase);
 
             DynamicData.Cases.Remove(this.SystemCase);
 
@@ -206,10 +228,22 @@ namespace HELP.MainWindows
 
             if (this.NewCase)
             {
+                this.SystemCase.NurseId = App.UserID;
+                this.SystemCase.NurseFullName = App.FullNameUser;
                 this.SystemCase.Reevaluation = this.SystemCase.Arrival.AddMinutes(this.SystemCase.PriorityInt);
 
                 DynamicData.Cases.Add(this.SystemCase);
+
+                App.DBConnection.AddCase(this.SystemCase, new List<VitalParameters>(this.SystemCase.PreviousVitalParameters));
             }
+
+            if (App.Role == 2)
+            {
+                this.SystemCase.MedicalId = App.UserID;
+                this.SystemCase.MedicalFullName = App.FullNameUser;
+            }
+
+            if (!this.NewCase) App.DBConnection.UpdateCase(this.SystemCase);
 
             this.DialogResult = true;
 
@@ -263,6 +297,7 @@ namespace HELP.MainWindows
                 this.SystemCase.Status.Trim().Length != 0 &&
                 this.SystemCase.Location.Trim().Length != 0 &&
                 this.SystemCase.Arrival != null &&
+                this.SystemCase.Reevaluation != null &&
                 this.SystemCase.Complaint.Trim().Length != 0 &&
                 this.SystemCase.TypeOfArrival.Trim().Length != 0 &&
                 this.SystemCase.Trauma.Trim().Length != 0

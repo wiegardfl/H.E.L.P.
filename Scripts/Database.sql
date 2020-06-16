@@ -7,7 +7,7 @@ CREATE TABLE users
 	`password` varchar(32) NOT NULL,
 	`role` varchar(7) NOT NULL,
 	`login_blocked` timestamp DEFAULT NULL,
-	`login_failed` tinyint DEFAULT 0,
+	`login_failed` int DEFAULT 0,
 	`last_failed_attempt` timestamp DEFAULT NULL
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE patients
 	`firstname` varchar(20) NOT NULL,
 	`lastname` varchar(20) NOT NULL,
 	`gender` varchar(8) NOT NULL,
-	`birthday` timestamp NOT NULL,
+	`birthday` date NOT NULL,
 	`nationality` varchar(100) DEFAULT NULL,
 	`health_insurance` varchar(100) DEFAULT NULL,
 	`kvnr` varchar(10) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE patients
 	`city` varchar(60) NOT NULL,
 	`phone` varchar(20) DEFAULT NULL,
 	`mobile` varchar(20) DEFAULT NULL,
-	`additional_information` text DEFAULT NULL,
+	`additional_informations` text DEFAULT NULL,
 	`function_relatives` varchar(13) DEFAULT NULL,
 	`firstname_relatives` varchar(20) DEFAULT NULL,
 	`lastname_relatives` varchar(20) DEFAULT NULL,
@@ -45,6 +45,7 @@ CREATE TABLE cases
 	`status` varchar(50) NOT NULL,
 	`location` varchar(50) NOT NULL,
 	`arrival` timestamp NOT NULL,
+	`reevaluation` timestamp NOT NULL,
 	`complaint` text NOT NULL,
 	`type_of_arrival` text NOT NULL,
 	`place_of_incident` text DEFAULT NULL,
@@ -53,10 +54,10 @@ CREATE TABLE cases
 	`anamnesis` text DEFAULT NULL,
 	`services` text DEFAULT NULL,
 	`external_services` text DEFAULT NULL,
-	`pyhsician_letter` text DEFAULT NULL,
+	`physician_letter` text DEFAULT NULL,
 	`diagnosis` text DEFAULT NULL,
 	`type_of_release` varchar(36) DEFAULT NULL,
-	`release` timestamp NOT NULL,
+	`release` timestamp DEFAULT NULL,
 	`medical_id` int DEFAULT NULL,
 	`nurse_id` int DEFAULT NULL,
 	`case_status` varchar(6) NOT NULL
@@ -89,7 +90,7 @@ CREATE TABLE nationalities
 	`nationality` varchar(100) NOT NULL
 );
 
-CREATE TABLE healt_insurances
+CREATE TABLE health_insurances
 (
 	`health_insurance` varchar(100) NOT NULL
 );
@@ -97,5 +98,5 @@ CREATE TABLE healt_insurances
 CREATE TABLE priorities
 (
 	`priority` varchar(14) NOT NULL,
-	`reeavluation_time` int NOT NULL
+	`reevaluation_time` int NOT NULL
 );

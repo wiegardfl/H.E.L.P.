@@ -1,5 +1,6 @@
 ﻿#region References
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -15,7 +16,9 @@ namespace HELP.Forms
         {
             InitializeComponent();
 
-            ((CollectionView)CollectionViewSource.GetDefaultView(listViewPatients.ItemsSource)).Filter = PatientsFilter;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(listViewPatients.ItemsSource);
+
+            view.Filter = PatientsFilter;
             Loaded += (sender, e) => Keyboard.Focus(txtSearch);
         }
         #endregion

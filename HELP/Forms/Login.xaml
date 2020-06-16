@@ -9,7 +9,8 @@
     Title="Anmeldung"
     Height="325" Width="500"
     ResizeMode="CanMinimize"
-    WindowStartupLocation="CenterScreen">
+    WindowStartupLocation="CenterScreen"
+    Visibility="Hidden">
 
     <Grid Margin="50 0 50 30">
         <Grid.ColumnDefinitions>
@@ -49,7 +50,7 @@
         
         <Label x:Name="lblError" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="20 5" Visibility="Hidden" FontSize="12" Foreground="#FF0000" />
         
-        <ProgressBar x:Name="progressBar"  Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Height="10" Margin="20 5" IsIndeterminate="True" Visibility="Hidden" Background="#FFFFFF" />
+        <ProgressBar x:Name="progressBar" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Height="10" Margin="20 5" IsIndeterminate="True" Visibility="Hidden" Background="#FFFFFF" />
         
         <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button Content="Anmelden" Cursor="Hand" />

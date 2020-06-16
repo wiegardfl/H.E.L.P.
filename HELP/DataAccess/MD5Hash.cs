@@ -1,12 +1,17 @@
-﻿using System.Security.Cryptography;
+﻿#region References
+using System.Security.Cryptography;
 using System.Text;
+#endregion
 
 namespace HELP.DataAccess
 {
     sealed class MD5Hash
     {
+        #region Constructors
         private MD5Hash() {}
+        #endregion
 
+        #region Methods
         public static string HashString(string str)
         {
             using (MD5 md5 = MD5.Create())
@@ -22,5 +27,6 @@ namespace HELP.DataAccess
                 return stringBuilder.ToString();
             }
         }
+        #endregion
     }
 }

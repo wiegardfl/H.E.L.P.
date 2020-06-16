@@ -55,7 +55,14 @@ namespace HELP.Forms
 
             if (CheckNecessaryFields())
             {
-                if (this.NewPatient && !DynamicData.Patients.Contains(this.Data)) DynamicData.Patients.Add(this.Data);
+                if (this.NewPatient && !DynamicData.Patients.Contains(this.Data))
+                {
+                    App.DBConnection.AddPatient(this.Data);
+
+                    DynamicData.Patients.Add(this.Data);
+                }
+
+                if (!this.NewPatient) App.DBConnection.UpdatePatient(this.Data);
 
                 this.DialogResult = true;
 
