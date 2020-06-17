@@ -23,6 +23,7 @@ namespace HELP.DataModels
         public static List<string> FunctionsRelatives { get; private set; } = new List<string>() { "Mutter", "Vater", "Großvater", "Großmutter", "Bruder", "Schwester", "Lebenspartner", "Enkelkind" };
         public static ObservableCollection<Patient> Patients { get; private set; } = new ObservableCollection<Patient>();
         public static ObservableCollection<Case> Cases { get; private set; } = new ObservableCollection<Case>();
+        public static ObservableCollection<User> Users { get; private set; } = new ObservableCollection<User>();
 
         #region OverviewFilters
         public static Dictionary<string, bool> FilterValues { get; private set; } = new Dictionary<string, bool>();

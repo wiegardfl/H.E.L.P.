@@ -162,7 +162,6 @@ namespace HELP.DataAccess
             }
             catch (MySqlException e)
             {
-                System.Windows.MessageBox.Show(e.ToString());
                 return -2;
             } finally
             {
@@ -172,258 +171,416 @@ namespace HELP.DataAccess
 
         public void LoadStaticData()
         {
-            if (connection.State != ConnectionState.Open) connection.Open();
-
-            MySqlCommand command = new MySqlCommand("SELECT priority, reevaluation_time FROM priorities", connection);
-
-            // Priorities
-            using (MySqlDataReader reader = command.ExecuteReader())
+            try
             {
-                while (reader.Read())
+                if (connection.State != ConnectionState.Open) connection.Open();
+
+                MySqlCommand command = new MySqlCommand("SELECT priority, reevaluation_time FROM priorities", connection);
+
+                // Priorities
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    DynamicData.Priorities.Add(reader.GetString("priority"), reader.GetInt32("reevaluation_time"));
-                    DynamicData.FilterValues.Add(reader.GetString("priority"), true);
+                    while (reader.Read())
+                    {
+                        DynamicData.Priorities.Add(reader.GetString("priority"), reader.GetInt32("reevaluation_time"));
+                        DynamicData.FilterValues.Add(reader.GetString("priority"), true);
+                    }
                 }
-            }
 
-            command.CommandText = "SELECT status FROM statuses";
+                command.CommandText = "SELECT status FROM statuses";
 
-            // Statuses
-            using (MySqlDataReader reader = command.ExecuteReader())
+                // Statuses
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DynamicData.Statuses.Add(reader.GetString("status"));
+                        DynamicData.FilterValues.Add(reader.GetString("status"), true);
+                    }
+                }
+
+                command.CommandText = "SELECT location FROM locations";
+
+                // Locations
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DynamicData.Locations.Add(reader.GetString("location"));
+                        DynamicData.FilterValues.Add(reader.GetString("location"), true);
+                    }
+                }
+
+                command.CommandText = "SELECT nationality FROM nationalities";
+
+                // Nationalities
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DynamicData.Nationalities.Add(reader.GetString("nationality"));
+                    }
+                }
+
+                command.CommandText = "SELECT health_insurance FROM health_insurances";
+
+                // Health Insurances
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DynamicData.HealthInsurances.Add(reader.GetString("health_insurance"));
+                    }
+                }
+            } catch (MySqlException e)
             {
-                while (reader.Read())
-                {
-                    DynamicData.Statuses.Add(reader.GetString("status"));
-                    DynamicData.FilterValues.Add(reader.GetString("status"), true);
-                }
-            }
-
-            command.CommandText = "SELECT location FROM locations";
-
-            // Locations
-            using (MySqlDataReader reader = command.ExecuteReader())
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
             {
-                while (reader.Read())
-                {
-                    DynamicData.Locations.Add(reader.GetString("location"));
-                    DynamicData.FilterValues.Add(reader.GetString("location"), true);
-                }
+                connection.Close();
             }
-
-            command.CommandText = "SELECT nationality FROM nationalities";
-
-            // Nationalities
-            using (MySqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    DynamicData.Nationalities.Add(reader.GetString("nationality"));
-                }
-            }
-
-            command.CommandText = "SELECT health_insurance FROM health_insurances";
-
-            // Health Insurances
-            using (MySqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    DynamicData.HealthInsurances.Add(reader.GetString("health_insurance"));
-                }
-            }
-
-            connection.Close();
         }
 
         public void UpdateReevaluationTimer(long caseNr, DateTime time)
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
 
-            MySqlCommand command = new MySqlCommand("UPDATE cases SET reevaluation='" + time.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE id = " + caseNr, connection);
+                MySqlCommand command = new MySqlCommand("UPDATE cases SET reevaluation='" + time.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE id = " + caseNr, connection);
 
-            command.ExecuteNonQuery();
-
-            connection.Close();
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
         }
 
         public void AddCase(Case systemCase, List<VitalParameters> vitalParameters)
         {
-            connection.Open();
-
-            MySqlCommand command = new MySqlCommand
-                ("INSERT INTO cases (patient_id, priority, status, location, arrival, reevaluation, complaint, type_of_arrival, trauma, case_status, nurse_id) VALUES (" +
-                 systemCase.Data.PatientNr + "," +
-                 "'" + systemCase.Priority + "'," +
-                 "'" + systemCase.Status + "'," +
-                 "'" + systemCase.Location + "'," +
-                 "'" + systemCase.Arrival.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
-                 "'" + systemCase.Reevaluation.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
-                 "'" + systemCase.Complaint + "'," +
-                 "'" + systemCase.TypeOfArrival + "'," +
-                 "'" + systemCase.Trauma + "'," +
-                 "'Open', " + systemCase.NurseId + "); SELECT last_insert_id();", connection
-                );
-
-            var caseNr = Convert.ToInt32(command.ExecuteScalar());
-            systemCase.CaseNr = caseNr;
-
-            foreach (VitalParameters vital in vitalParameters)
+            try
             {
-                string sql = "INSERT INTO vital_parameters (case_id, time, heart_frequence, breath_frequence, bloodpressure_min, bloodpressure_max, temperature, oxygen_saturation) VALUES (";
+                connection.Open();
 
-                sql += caseNr + ",";
-                sql += "'" + vital.Time.ToString("yyyy-MM-dd HH:mm:ss") + "',";
-                sql += vital.HeartFrequence == null ? "NULL," : vital.HeartFrequence + ",";
-                sql += vital.BreathFrequence == null ? "NULL," : vital.BreathFrequence + ",";
-                sql += vital.BloodPressureMin == null ? "NULL," : vital.BloodPressureMin + ",";
-                sql += vital.BloodPressureMax == null ? "NULL," : vital.BloodPressureMax + ",";
-                sql += vital.Temperature == null ? "NULL," : vital.Temperature.ToString().Replace(",", ".") + ",";
-                sql += vital.OxygenSaturation == null ? "NULL" : vital.OxygenSaturation + "";
-                sql += ")";
+                MySqlCommand command = new MySqlCommand
+                    ("INSERT INTO cases (patient_id, priority, status, location, arrival, reevaluation, complaint, type_of_arrival, trauma, case_status, nurse_id) VALUES (" +
+                     systemCase.Data.PatientNr + "," +
+                     "'" + systemCase.Priority + "'," +
+                     "'" + systemCase.Status + "'," +
+                     "'" + systemCase.Location + "'," +
+                     "'" + systemCase.Arrival.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                     "'" + systemCase.Reevaluation.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                     "'" + systemCase.Complaint + "'," +
+                     "'" + systemCase.TypeOfArrival + "'," +
+                     "'" + systemCase.Trauma + "'," +
+                     "'Open', " + systemCase.NurseId + "); SELECT last_insert_id();", connection
+                    );
 
-                MySqlCommand vitalsCommand = new MySqlCommand(sql, connection);
+                var caseNr = Convert.ToInt32(command.ExecuteScalar());
+                systemCase.CaseNr = caseNr;
 
-                vitalsCommand.ExecuteNonQuery();
+                foreach (VitalParameters vital in vitalParameters)
+                {
+                    string sql = "INSERT INTO vital_parameters (case_id, time, heart_frequence, breath_frequence, bloodpressure_min, bloodpressure_max, temperature, oxygen_saturation) VALUES (";
+
+                    sql += caseNr + ",";
+                    sql += "'" + vital.Time.ToString("yyyy-MM-dd HH:mm:ss") + "',";
+                    sql += vital.HeartFrequence == null ? "NULL," : vital.HeartFrequence + ",";
+                    sql += vital.BreathFrequence == null ? "NULL," : vital.BreathFrequence + ",";
+                    sql += vital.BloodPressureMin == null ? "NULL," : vital.BloodPressureMin + ",";
+                    sql += vital.BloodPressureMax == null ? "NULL," : vital.BloodPressureMax + ",";
+                    sql += vital.Temperature == null ? "NULL," : vital.Temperature.ToString().Replace(",", ".") + ",";
+                    sql += vital.OxygenSaturation == null ? "NULL" : vital.OxygenSaturation + "";
+                    sql += ")";
+
+                    MySqlCommand vitalsCommand = new MySqlCommand(sql, connection);
+
+                    vitalsCommand.ExecuteNonQuery();
+                }
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
             }
-
-            connection.Close();
         }
 
         public void UpdateCase(Case systemCase)
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
 
-            MySqlCommand command = new MySqlCommand
-                ("UPDATE cases SET priority='" + systemCase.Priority +
-                 "', status='" + systemCase.Status +
-                 "', location='" + systemCase.Location +
-                 "', other_informations='" + systemCase.OtherInformations +
-                 "', anamnesis='" + systemCase.Anamnesis +
-                 "', services='" + systemCase.Services +
-                 "', external_services='" + systemCase.ExternalServices +
-                 "', physician_letter='" + systemCase.PhysicianLetter +
-                 "', diagnosis='" + systemCase.Diagnosis +
-                 "', type_of_release='" + systemCase.TypeOfRelease +
-                 "'" + (systemCase.MedicalId == 0 ? "" : ", medical_id=" + systemCase.MedicalId) + " WHERE id = " + systemCase.CaseNr, connection
-                );
+                MySqlCommand command = new MySqlCommand
+                    ("UPDATE cases SET priority='" + systemCase.Priority +
+                     "', status='" + systemCase.Status +
+                     "', location='" + systemCase.Location +
+                     "', other_informations='" + systemCase.OtherInformations +
+                     "', anamnesis='" + systemCase.Anamnesis +
+                     "', services='" + systemCase.Services +
+                     "', external_services='" + systemCase.ExternalServices +
+                     "', physician_letter='" + systemCase.PhysicianLetter +
+                     "', diagnosis='" + systemCase.Diagnosis +
+                     "', type_of_release='" + systemCase.TypeOfRelease +
+                     "'" + (systemCase.MedicalId == 0 ? "" : ", medical_id=" + systemCase.MedicalId) + " WHERE id = " + systemCase.CaseNr, connection
+                    );
 
-            command.ExecuteNonQuery();
-
-            connection.Close();
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
         }
 
         public void CloseCase(Case systemCase)
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
 
-            MySqlCommand command = new MySqlCommand("UPDATE cases SET `release`='" + systemCase.Released.ToString("yyyy-MM-dd HH:mm:ss") + "', case_status='Closed' WHERE id = " + systemCase.CaseNr, connection);
+                MySqlCommand command = new MySqlCommand("UPDATE cases SET `release`='" + systemCase.Released.ToString("yyyy-MM-dd HH:mm:ss") + "', case_status='Closed' WHERE id = " + systemCase.CaseNr, connection);
 
-            command.ExecuteNonQuery();
-
-            connection.Close();
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
         }
 
         public void AddPatient(Patient patient)
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
 
-            MySqlCommand command = new MySqlCommand
-                ("INSERT INTO patients (firstname, lastname, gender, birthday, place_of_birth, nationality, health_insurance, kvnr, address, postalcode, city, phone, mobile, additional_informations, function_relatives, firstname_relatives, lastname_relatives, address_relatives, postalcode_relatives, city_relatives, phone_relatives, mobile_relatives) VALUES(" +
-                 "'" + patient.FirstName + "'," +
-                 "'" + patient.LastName + "'," +
-                 "'" + patient.Gender + "'," +
-                 "'" + patient.Birthday.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
-                 "'" + patient.PlaceOfBirth + "'," +
-                 "'" + patient.Nationality + "'," +
-                 "'" + patient.HealthInsurance + "'," +
-                 "'" + patient.KVNR + "'," +
-                 "'" + patient.Address + "'," +
-                 "'" + patient.PostalCode + "'," +
-                 "'" + patient.City + "'," +
-                 "'" + patient.Phone + "'," +
-                 "'" + patient.Mobile + "'," +
-                 "'" + patient.AdditionalInformations + "'," +
-                 "'" + patient.FunctionRelatives + "'," +
-                 "'" + patient.FirstNameRelatives + "'," +
-                 "'" + patient.LastNameRelatives + "'," +
-                 "'" + patient.AddressRelatives + "'," +
-                 "'" + patient.PostalCodeRelatives + "'," +
-                 "'" + patient.CityRelatives + "'," +
-                 "'" + patient.PhoneRelatives + "'," +
-                 "'" + patient.MobileRelatives + "'); SELECT last_insert_id();", connection
-                );
+                MySqlCommand command = new MySqlCommand
+                    ("INSERT INTO patients (firstname, lastname, gender, birthday, place_of_birth, nationality, health_insurance, kvnr, address, postalcode, city, phone, mobile, additional_informations, function_relatives, firstname_relatives, lastname_relatives, address_relatives, postalcode_relatives, city_relatives, phone_relatives, mobile_relatives) VALUES(" +
+                     "'" + patient.FirstName + "'," +
+                     "'" + patient.LastName + "'," +
+                     "'" + patient.Gender + "'," +
+                     "'" + patient.Birthday.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                     "'" + patient.PlaceOfBirth + "'," +
+                     "'" + patient.Nationality + "'," +
+                     "'" + patient.HealthInsurance + "'," +
+                     "'" + patient.KVNR + "'," +
+                     "'" + patient.Address + "'," +
+                     "'" + patient.PostalCode + "'," +
+                     "'" + patient.City + "'," +
+                     "'" + patient.Phone + "'," +
+                     "'" + patient.Mobile + "'," +
+                     "'" + patient.AdditionalInformations + "'," +
+                     "'" + patient.FunctionRelatives + "'," +
+                     "'" + patient.FirstNameRelatives + "'," +
+                     "'" + patient.LastNameRelatives + "'," +
+                     "'" + patient.AddressRelatives + "'," +
+                     "'" + patient.PostalCodeRelatives + "'," +
+                     "'" + patient.CityRelatives + "'," +
+                     "'" + patient.PhoneRelatives + "'," +
+                     "'" + patient.MobileRelatives + "'); SELECT last_insert_id();", connection
+                    );
 
-            var patientNr = Convert.ToInt32(command.ExecuteScalar());
-            patient.PatientNr = patientNr;
-
-            connection.Close();
+                var patientNr = Convert.ToInt32(command.ExecuteScalar());
+                patient.PatientNr = patientNr;
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
         }
 
         public void UpdatePatient(Patient patient)
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
 
-            MySqlCommand command = new MySqlCommand
-                ("UPDATE patients SET firstname='" +
-                 patient.FirstName + "', lastname='" +
-                 patient.LastName + "', gender='" +
-                 patient.Gender + "', birthday='" +
-                 patient.Birthday.ToString("yyyy-MM-dd HH:mm:ss") + "', place_of_birth='" +
-                 patient.PlaceOfBirth + "', nationality='" +
-                 patient.Nationality + "', health_insurance='" +
-                 patient.HealthInsurance + "', kvnr='" +
-                 patient.KVNR + "', address='" +
-                 patient.Address + "', postalcode='" +
-                 patient.PostalCode + "', city='" +
-                 patient.City + "', phone='" +
-                 patient.Phone + "', mobile='" +
-                 patient.Mobile + "', additional_informations='" +
-                 patient.AdditionalInformations + "', function_relatives='" +
-                 patient.FunctionRelatives + "', firstname_relatives='" +
-                 patient.FirstNameRelatives + "', lastname_relatives='" +
-                 patient.LastNameRelatives + "', address_relatives='" +
-                 patient.AddressRelatives + "', postalcode_relatives='" +
-                 patient.PostalCodeRelatives + "', city_relatives='" +
-                 patient.CityRelatives + "', phone_relatives='" +
-                 patient.Phone + "', mobile_relatives='" +
-                 patient.Mobile + "' WHERE id = " + patient.PatientNr, connection
-                );
+                MySqlCommand command = new MySqlCommand
+                    ("UPDATE patients SET firstname='" +
+                     patient.FirstName + "', lastname='" +
+                     patient.LastName + "', gender='" +
+                     patient.Gender + "', birthday='" +
+                     patient.Birthday.ToString("yyyy-MM-dd HH:mm:ss") + "', place_of_birth='" +
+                     patient.PlaceOfBirth + "', nationality='" +
+                     patient.Nationality + "', health_insurance='" +
+                     patient.HealthInsurance + "', kvnr='" +
+                     patient.KVNR + "', address='" +
+                     patient.Address + "', postalcode='" +
+                     patient.PostalCode + "', city='" +
+                     patient.City + "', phone='" +
+                     patient.Phone + "', mobile='" +
+                     patient.Mobile + "', additional_informations='" +
+                     patient.AdditionalInformations + "', function_relatives='" +
+                     patient.FunctionRelatives + "', firstname_relatives='" +
+                     patient.FirstNameRelatives + "', lastname_relatives='" +
+                     patient.LastNameRelatives + "', address_relatives='" +
+                     patient.AddressRelatives + "', postalcode_relatives='" +
+                     patient.PostalCodeRelatives + "', city_relatives='" +
+                     patient.CityRelatives + "', phone_relatives='" +
+                     patient.Phone + "', mobile_relatives='" +
+                     patient.Mobile + "' WHERE id = " + patient.PatientNr, connection
+                    );
 
-            command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
+        }
 
-            connection.Close();
+        public void GetUsers()
+        {
+            try
+            {
+                connection.Open();
+
+                MySqlCommand command = new MySqlCommand("SELECT id, firstname, lastname, username, role FROM users", connection);
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DynamicData.Users.Add(new User() { ID = (int)reader["id"], FirstName = reader["firstname"].ToString(), LastName = reader["lastname"].ToString(), UserName = reader["username"].ToString(), Role = reader["role"].ToString() });
+                    }
+                }
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void UpdateUser(User user, bool resetPassword)
+        {
+            try
+            {
+                connection.Open();
+
+                MySqlCommand command = new MySqlCommand
+                    ("UPDATE users SET firstname='" +
+                    user.FirstName + "', lastname='" +
+                    user.LastName + "', username='" +
+                    user.UserName + "', role='" +
+                    user.Role + "'" +
+                    (resetPassword ? ", password='" + MD5Hash.HashString("password") + "'" : "") +
+                    " WHERE id = " + user.ID, connection
+                    );
+
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void AddUser(User user)
+        {
+            try
+            {
+                connection.Open();
+
+                MySqlCommand command = new MySqlCommand
+                    ("INSERT INTO users (firstname, lastname, username, password, role) VALUES (" +
+                     "'" + user.FirstName + "'," +
+                     "'" + user.LastName + "'," +
+                     "'" + user.UserName + "'," +
+                     "'" + MD5Hash.HashString("password") + "'," +
+                     "'" + user.Role + "'); SELECT last_insert_id();", connection
+                    );
+
+                var userID = Convert.ToInt32(command.ExecuteScalar());
+                user.ID = userID;
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void RemoveUser(User user)
+        {
+            try
+            {
+                connection.Open();
+
+                MySqlCommand command = new MySqlCommand("DELETE FROM users WHERE id = " + user.ID, connection);
+
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
         }
 
         public void AddVitalParameters(long caseNr, VitalParameters vitalParameters)
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
 
-            string sql = "INSERT INTO vital_parameters (case_id, time, heart_frequence, breath_frequence, bloodpressure_min, bloodpressure_max, temperature, oxygen_saturation) VALUES (";
+                string sql = "INSERT INTO vital_parameters (case_id, time, heart_frequence, breath_frequence, bloodpressure_min, bloodpressure_max, temperature, oxygen_saturation) VALUES (";
 
-            sql += caseNr + ",";
-            sql += "'" + vitalParameters.Time.ToString("yyyy-MM-dd HH:mm:ss") + "',";
-            sql += vitalParameters.HeartFrequence == null ? "NULL," : vitalParameters.HeartFrequence + ",";
-            sql += vitalParameters.BreathFrequence == null ? "NULL," : vitalParameters.BreathFrequence + ",";
-            sql += vitalParameters.BloodPressureMin == null ? "NULL," : vitalParameters.BloodPressureMin + ",";
-            sql += vitalParameters.BloodPressureMax == null ? "NULL," : vitalParameters.BloodPressureMax + ",";
-            sql += vitalParameters.Temperature == null ? "NULL," : vitalParameters.Temperature.ToString().Replace(",", ".") + ",";
-            sql += vitalParameters.OxygenSaturation == null ? "NULL" : vitalParameters.OxygenSaturation + "";
-            sql += ")";
+                sql += caseNr + ",";
+                sql += "'" + vitalParameters.Time.ToString("yyyy-MM-dd HH:mm:ss") + "',";
+                sql += vitalParameters.HeartFrequence == null ? "NULL," : vitalParameters.HeartFrequence + ",";
+                sql += vitalParameters.BreathFrequence == null ? "NULL," : vitalParameters.BreathFrequence + ",";
+                sql += vitalParameters.BloodPressureMin == null ? "NULL," : vitalParameters.BloodPressureMin + ",";
+                sql += vitalParameters.BloodPressureMax == null ? "NULL," : vitalParameters.BloodPressureMax + ",";
+                sql += vitalParameters.Temperature == null ? "NULL," : vitalParameters.Temperature.ToString().Replace(",", ".") + ",";
+                sql += vitalParameters.OxygenSaturation == null ? "NULL" : vitalParameters.OxygenSaturation + "";
+                sql += ")";
 
-            MySqlCommand command = new MySqlCommand(sql, connection);
+                MySqlCommand command = new MySqlCommand(sql, connection);
 
-            command.ExecuteNonQuery();
-
-            connection.Close();
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
         }
 
         public void StartDynamicDataLoading()
         {
-            var f = DynamicData.Cases;
-
             continueDynamicDataLoading = true;
 
-            dataLoaderConnection.Open();
+            try
+            {
+                dataLoaderConnection.Open();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+
+                dataLoaderConnection.Close();
+
+                return;
+            }
 
             dynamicDataLoader.RunWorkerAsync();
         }
@@ -442,171 +599,185 @@ namespace HELP.DataAccess
 
             MySqlCommand command = new MySqlCommand("SELECT * FROM patients", dataLoaderConnection);
 
-            while (true)
+            try
             {
-                if (!App.Editing)
+                while (true)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(ClearData), new object());
-
-                    command.CommandText = "SELECT * FROM patients";
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    if (!App.Editing)
                     {
-                        while (reader.Read())
+                        patients = new List<Patient>();
+                        cases = new List<Case>();
+
+                        Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(ClearData), new object());
+
+                        command.CommandText = "SELECT * FROM patients";
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            if ((int)reader["id"] == 1) continue;
-
-                            Patient patient = new Patient()
+                            while (reader.Read())
                             {
-                                PatientNr = (int)reader["id"],
-                                FirstName = reader["firstname"].ToString(),
-                                LastName = reader["lastname"].ToString(),
-                                Gender = reader["gender"].ToString(),
-                                Birthday = DateTime.Parse(reader["birthday"].ToString()),
-                                PlaceOfBirth = "" + reader["place_of_birth"], // Nullable
-                                Nationality = "" + reader["nationality"], // Nullable
-                                HealthInsurance = "" + reader["health_insurance"], // Nullable
-                                KVNR = reader["kvnr"].ToString(),
-                                Address = reader["address"].ToString(),
-                                PostalCode = reader["postalcode"].ToString(),
-                                City = reader["city"].ToString(),
-                                Phone = "" + reader["phone"], // Nullable
-                                Mobile = "" + reader["mobile"], // Nullable
-                                AdditionalInformations = "" + reader["additional_informations"], // Nullable
-                                FunctionRelatives = "" + reader["function_relatives"], // Nullable
-                                FirstNameRelatives = "" + reader["firstname_relatives"], // Nullable
-                                LastNameRelatives = "" + reader["lastname_relatives"], // Nullable
-                                AddressRelatives = "" + reader["address_relatives"], // Nullable
-                                PostalCodeRelatives = "" + reader["postalcode_relatives"], // Nullable
-                                CityRelatives = "" + reader["city_relatives"], // Nullable
-                                PhoneRelatives = "" + reader["phone_relatives"], // Nullable
-                                MobileRelatives = "" + reader["mobile_relatives"] // Nullable
-                            };
+                                if ((int)reader["id"] == 1) continue;
 
-                            //Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(ClearData), new object());
-                            patients.Add(patient);
-                            Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(AddPatient), patient);
-                            //DynamicData.Patients.Add(patient);
-                        }
-                    }
-
-                    command.CommandText = "SELECT * FROM cases";
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            if ("Closed".Equals(reader["case_status"].ToString())) continue;
-
-                            Patient patient = new Patient() { PatientNr = 1, FirstName = "Unbekannter", LastName = "Patient" };
-
-                            foreach (Patient pat in patients)
-                            {
-                                if (pat.PatientNr == (int)reader["patient_id"]) patient = pat;
-                            }
-
-                            Case systemCase = new Case(patient)
-                            {
-                                CaseNr = (int)reader["id"],
-                                Priority = reader["priority"].ToString(),
-                                Status = reader["status"].ToString(),
-                                Location = reader["location"].ToString(),
-                                Arrival = DateTime.Parse(reader["arrival"].ToString()),
-                                Reevaluation = DateTime.Parse(reader["reevaluation"].ToString()),
-                                Complaint = reader["complaint"].ToString(),
-                                TypeOfArrival = reader["type_of_arrival"].ToString(),
-                                PlaceOfIncident = "" + reader["place_of_incident"], // Nullable
-                                Trauma = reader["trauma"].ToString(),
-                                OtherInformations = "" + reader["other_informations"], // Nullable
-                                Anamnesis = "" + reader["anamnesis"], // Nullable
-                                Services = "" + reader["services"], // Nullable
-                                ExternalServices = "" + reader["external_services"], // Nullable
-                                PhysicianLetter = "" + reader["physician_letter"], // Nullable
-                                Diagnosis = "" + reader["diagnosis"], // Nullable
-                                TypeOfRelease = "" + reader["type_of_release"] // Nullable
-                            };
-
-                            //if (reader["release"] == typeof(DBNull)) systemCase.Released = DateTime.Parse(reader["release"].ToString());
-                            if (!reader.IsDBNull(19)) systemCase.MedicalId = (int)reader["medical_id"];
-                            if (!reader.IsDBNull(20)) systemCase.NurseId = (int)reader["nurse_id"];
-
-                            cases.Add(systemCase);
-                            Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(AddCase), systemCase);
-                            //DynamicData.Cases.Add(systemCase);
-                        }
-                    }
-
-                    command.CommandText = "SELECT id, firstname, lastname FROM users";
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            foreach (Case sCase in cases)
-                            {
-                                if (sCase.MedicalId == (int)reader["id"])
+                                Patient patient = new Patient()
                                 {
-                                    sCase.MedicalFullName = reader["firstname"].ToString() + " " + reader["lastname"].ToString();
-                                }
+                                    PatientNr = (int)reader["id"],
+                                    FirstName = reader["firstname"].ToString(),
+                                    LastName = reader["lastname"].ToString(),
+                                    Gender = reader["gender"].ToString(),
+                                    Birthday = DateTime.Parse(reader["birthday"].ToString()),
+                                    PlaceOfBirth = "" + reader["place_of_birth"], // Nullable
+                                    Nationality = "" + reader["nationality"], // Nullable
+                                    HealthInsurance = "" + reader["health_insurance"], // Nullable
+                                    KVNR = reader["kvnr"].ToString(),
+                                    Address = reader["address"].ToString(),
+                                    PostalCode = reader["postalcode"].ToString(),
+                                    City = reader["city"].ToString(),
+                                    Phone = "" + reader["phone"], // Nullable
+                                    Mobile = "" + reader["mobile"], // Nullable
+                                    AdditionalInformations = "" + reader["additional_informations"], // Nullable
+                                    FunctionRelatives = "" + reader["function_relatives"], // Nullable
+                                    FirstNameRelatives = "" + reader["firstname_relatives"], // Nullable
+                                    LastNameRelatives = "" + reader["lastname_relatives"], // Nullable
+                                    AddressRelatives = "" + reader["address_relatives"], // Nullable
+                                    PostalCodeRelatives = "" + reader["postalcode_relatives"], // Nullable
+                                    CityRelatives = "" + reader["city_relatives"], // Nullable
+                                    PhoneRelatives = "" + reader["phone_relatives"], // Nullable
+                                    MobileRelatives = "" + reader["mobile_relatives"] // Nullable
+                                };
 
-                                if (sCase.NurseId == (int)reader["id"])
-                                {
-                                    sCase.NurseFullName = reader["firstname"].ToString() + " " + reader["lastname"].ToString();
-                                }
+                                //Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(ClearData), new object());
+                                patients.Add(patient);
+                                Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(AddPatient), patient);
+                                //DynamicData.Patients.Add(patient);
                             }
                         }
-                    }
 
-                    command.CommandText = "SELECT * FROM vital_parameters";
+                        command.CommandText = "SELECT * FROM cases";
 
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
+                        using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            foreach (Case sCase in cases)
+                            while (reader.Read())
                             {
-                                if (sCase.CaseNr == (int)reader["case_id"])
+                                if ("Closed".Equals(reader["case_status"].ToString())) continue;
+
+                                Patient patient = new Patient() { PatientNr = 1, FirstName = "Unbekannter", LastName = "Patient" };
+
+                                foreach (Patient pat in patients)
                                 {
-                                    VitalParameters vitalParameters = new VitalParameters() { Time = DateTime.Parse(reader["time"].ToString()) };
+                                    if (pat.PatientNr == (int)reader["patient_id"]) patient = pat;
+                                }
 
-                                    if (!reader.IsDBNull(2)) vitalParameters.HeartFrequence = (int)reader["heart_frequence"];
-                                    if (!reader.IsDBNull(3)) vitalParameters.BreathFrequence = (int)reader["breath_frequence"];
-                                    if (!reader.IsDBNull(4)) vitalParameters.BloodPressureMin = (int)reader["bloodpressure_min"];
-                                    if (!reader.IsDBNull(5)) vitalParameters.BloodPressureMax = (int)reader["bloodpressure_max"];
-                                    if (!reader.IsDBNull(6)) vitalParameters.Temperature = (double)reader["temperature"];
-                                    if (!reader.IsDBNull(7)) vitalParameters.OxygenSaturation = (int)reader["oxygen_saturation"];
+                                Case systemCase = new Case(patient)
+                                {
+                                    CaseNr = (int)reader["id"],
+                                    Priority = reader["priority"].ToString(),
+                                    Status = reader["status"].ToString(),
+                                    Location = reader["location"].ToString(),
+                                    Arrival = DateTime.Parse(reader["arrival"].ToString()),
+                                    Reevaluation = DateTime.Parse(reader["reevaluation"].ToString()),
+                                    Complaint = reader["complaint"].ToString(),
+                                    TypeOfArrival = reader["type_of_arrival"].ToString(),
+                                    PlaceOfIncident = "" + reader["place_of_incident"], // Nullable
+                                    Trauma = reader["trauma"].ToString(),
+                                    OtherInformations = "" + reader["other_informations"], // Nullable
+                                    Anamnesis = "" + reader["anamnesis"], // Nullable
+                                    Services = "" + reader["services"], // Nullable
+                                    ExternalServices = "" + reader["external_services"], // Nullable
+                                    PhysicianLetter = "" + reader["physician_letter"], // Nullable
+                                    Diagnosis = "" + reader["diagnosis"], // Nullable
+                                    TypeOfRelease = "" + reader["type_of_release"] // Nullable
+                                };
 
-                                    sCase.PreviousVitalParameters.Add(vitalParameters);
+                                //if (reader["release"] == typeof(DBNull)) systemCase.Released = DateTime.Parse(reader["release"].ToString());
+                                if (!reader.IsDBNull(19)) systemCase.MedicalId = (int)reader["medical_id"];
+                                if (!reader.IsDBNull(20)) systemCase.NurseId = (int)reader["nurse_id"];
+
+                                cases.Add(systemCase);
+                                Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(AddCase), systemCase);
+                                //DynamicData.Cases.Add(systemCase);
+                            }
+                        }
+
+                        command.CommandText = "SELECT id, firstname, lastname FROM users";
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                foreach (Case sCase in cases)
+                                {
+                                    if (sCase.MedicalId == (int)reader["id"])
+                                    {
+                                        sCase.MedicalFullName = reader["firstname"].ToString() + " " + reader["lastname"].ToString();
+                                    }
+
+                                    if (sCase.NurseId == (int)reader["id"])
+                                    {
+                                        sCase.NurseFullName = reader["firstname"].ToString() + " " + reader["lastname"].ToString();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    for (int i = 0; i < 39; i++)
-                    {
-                        if (!continueDynamicDataLoading)
+                        command.CommandText = "SELECT * FROM vital_parameters";
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            dataLoaderConnection.Close();
+                            while (reader.Read())
+                            {
+                                foreach (Case sCase in cases)
+                                {
+                                    if (sCase.CaseNr == (int)reader["case_id"])
+                                    {
+                                        VitalParameters vitalParameters = new VitalParameters() { Time = DateTime.Parse(reader["time"].ToString()) };
 
-                            return;
+                                        if (!reader.IsDBNull(2)) vitalParameters.HeartFrequence = (int)reader["heart_frequence"];
+                                        if (!reader.IsDBNull(3)) vitalParameters.BreathFrequence = (int)reader["breath_frequence"];
+                                        if (!reader.IsDBNull(4)) vitalParameters.BloodPressureMin = (int)reader["bloodpressure_min"];
+                                        if (!reader.IsDBNull(5)) vitalParameters.BloodPressureMax = (int)reader["bloodpressure_max"];
+                                        if (!reader.IsDBNull(6)) vitalParameters.Temperature = (double)reader["temperature"];
+                                        if (!reader.IsDBNull(7)) vitalParameters.OxygenSaturation = (int)reader["oxygen_saturation"];
+
+                                        sCase.PreviousVitalParameters.Add(vitalParameters);
+                                    }
+                                }
+                            }
                         }
 
-                        Thread.Sleep(500);
-                    }
-                } else
-                {
-                    for (int i = 0; i < 39; i++)
-                    {
-                        if (!continueDynamicDataLoading)
+                        for (int i = 0; i < 39; i++)
                         {
-                            dataLoaderConnection.Close();
+                            if (!continueDynamicDataLoading)
+                            {
+                                dataLoaderConnection.Close();
 
-                            return;
+                                return;
+                            }
+
+                            Thread.Sleep(500);
                         }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 39; i++)
+                        {
+                            if (!continueDynamicDataLoading)
+                            {
+                                dataLoaderConnection.Close();
 
-                        Thread.Sleep(500);
+                                return;
+                            }
+
+                            Thread.Sleep(500);
+                        }
                     }
                 }
+            } catch (MySqlException ex)
+            {
+                if (ex.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+
+                dataLoaderConnection.Close();
+
+                return;
             }
         }
 

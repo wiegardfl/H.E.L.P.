@@ -107,7 +107,8 @@ namespace HELP.Forms
             {
                 App.CloseState = 1;
 
-                new Overview().Show();
+                if (App.Role == 1 || App.Role == 2) new Overview().Show();
+                else if (App.Role == 3) new UserManagement().Show();
 
                 this.Close();
             } else if (result == 0)

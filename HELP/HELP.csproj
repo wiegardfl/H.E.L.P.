@@ -52,6 +52,7 @@
     <Compile Include="DataModels\Case.cs" />
     <Compile Include="DataModels\DynamicData.cs" />
     <Compile Include="DataModels\Patient.cs" />
+    <Compile Include="DataModels\User.cs" />
     <Compile Include="DataModels\VitalParameters.cs" />
     <Compile Include="Forms\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
@@ -61,6 +62,9 @@
     </Compile>
     <Compile Include="Forms\PatientList.xaml.cs">
       <DependentUpon>PatientList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserManagement.xaml.cs">
+      <DependentUpon>UserManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindows\CaseWindow.xaml.cs">
       <DependentUpon>CaseWindow.xaml</DependentUpon>
@@ -135,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\PatientList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\UserManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

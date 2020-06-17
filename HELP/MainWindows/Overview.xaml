@@ -42,6 +42,7 @@
 
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
+                    <Setter Property="Cursor" Value="Hand" />
                 </Style>
 
                 <Style TargetType="{x:Type Label}">

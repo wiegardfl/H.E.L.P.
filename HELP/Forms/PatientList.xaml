@@ -32,6 +32,10 @@
                 <ContextMenu x:Key="patientContextMenu">
                     <MenuItem Header="Daten anzeigen" Click="MenuItem_Click" />
                 </ContextMenu>
+
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
             </ListView.Resources>
 
             <ListView.ItemContainerStyle>

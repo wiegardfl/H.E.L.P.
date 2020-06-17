@@ -1,0 +1,95 @@
+﻿<Window
+    x:Class="HELP.Forms.UserManagement"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:HELP.Forms"
+    mc:Ignorable="d"
+    Title="Benutzerverwaltung"
+    Height="400" Width="600"
+    WindowStartupLocation="CenterScreen"
+    ResizeMode="NoResize"
+    Background="#FFDCD9D9">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="10 0" />
+            <Setter Property="Padding" Value="2" />
+        </Style>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400*" />
+            <ColumnDefinition Width="600*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="200" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="usersListView" Grid.RowSpan="3" Margin="10" SelectionMode="Single">
+            <ListView.Resources>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseLeftButtonUp"  Handler="ListViewItem_MouseLeftButtonUp" />
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </ListView.Resources>
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding UserName}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Column="1" Grid.RowSpan="2">
+            <StackPanel>
+                <Label Margin="5 0" Content="Vorname:" />
+                <TextBox x:Name="txtFirstName" />
+            </StackPanel>
+
+            <StackPanel>
+                <Label Margin="5 0" Content="Nachname:" />
+                <TextBox x:Name="txtLastName" />
+            </StackPanel>
+
+            <StackPanel>
+                <Label Margin="5 0" Content="Benutzername:" />
+                <TextBox x:Name="txtUserName" />
+            </StackPanel>
+            
+            <StackPanel>
+                <Label Margin="5 0" Content="Benutzerklasse:" />
+                <ComboBox x:Name="cmbRole" Margin="10 0" SelectedValuePath="Content">
+                    <ComboBoxItem Content="nurse" />
+                    <ComboBoxItem Content="medical" />
+                    <ComboBoxItem Content="admin" />
+                </ComboBox>
+            </StackPanel>
+
+            <CheckBox x:Name="checkResetPassword" Margin="10 10" Content="Passwort zurücksetzen" Checked="CheckResetPassword_Changed" Unchecked="CheckResetPassword_Changed" />
+            <Label x:Name="lblInfo" Margin="10 0" Visibility="Hidden" Content="Standart Passwort ist 'password'!" />
+        </StackPanel>
+
+        <Button x:Name="btnLogout" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Content="Abmelden" Click="BtnLogout_Click" />
+
+        <Button x:Name="btnDeleteUser" Grid.Row="2" Grid.Column="1" Margin="10 10 155 10" HorizontalAlignment="Right" Content="Benutzer löschen" Click="BtnDeleteUser_Click" />
+        <Button x:Name="btnCancel" Grid.Row="2" Grid.Column="1" Margin="10 10 80 10" HorizontalAlignment="Right" Content="Abbrechen" Click="BtnCancel_Click" />
+        <Button x:Name="btnSave" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Content="Speichern" Click="BtnSave_Click" />
+    </Grid>
+</Window>
