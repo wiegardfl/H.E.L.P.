@@ -10,19 +10,10 @@ namespace HELP.DataModels
 {
     public class Case : INotifyPropertyChanged, ICloneable
     {
-        #region Variables
-        //private static int dailySerialNr = 0;
-        private static DateTime currentDay;
-        #endregion
-
         #region Constructors
         public Case(Patient patient)
         {
             this.Data = patient;
-
-            //CurrentDay = Arrival.Date;
-
-            //this.CaseNr = long.Parse(Arrival.ToString("yyMMdd0000")) + ++dailySerialNr;
         }
         #endregion
 
@@ -92,19 +83,6 @@ namespace HELP.DataModels
             }
             private set { }
         }
-
-        //private static DateTime CurrentDay
-        //{
-        //    get => currentDay;
-        //    set
-        //    {
-        //        if (value != currentDay)
-        //        {
-        //            currentDay = value;
-        //            dailySerialNr = 0;
-        //        }
-        //    }
-        //}
         #endregion
 
         #region Interface Implementation
