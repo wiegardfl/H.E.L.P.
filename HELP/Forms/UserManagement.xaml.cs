@@ -124,6 +124,8 @@ namespace HELP.Forms
             CollectionViewSource.GetDefaultView(this.usersListView.ItemsSource).Refresh();
 
             App.DBConnection.RemoveUser(user);
+
+            ClearSelection();
         }
 
         private void CheckResetPassword_Changed(object sender, RoutedEventArgs e)
