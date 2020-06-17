@@ -24,7 +24,7 @@ namespace HELP.Forms
             InitializeComponent();
 
             this.loadingWindow = new LoadingWindow();
-            this.credentials = new string[2];
+            this.credentials = new string[3];
 
             if (init)
             {
@@ -86,6 +86,7 @@ namespace HELP.Forms
 
             credentials[0] = this.txtUsername.Text;
             credentials[1] = MD5Hash.HashString(this.txtPassword.Password);
+            credentials[2] = this.txtPassword.Password;
 
             BackgroundWorker authenticationWorker = new BackgroundWorker();
 
@@ -123,6 +124,27 @@ namespace HELP.Forms
             } else if (result == -2)
             {
                 MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } else if (result == -3)
+            {
+                NewPassword newPasswordDialog = new NewPassword(App.UserID);
+
+                if (newPasswordDialog.ShowDialog() == true)
+                {
+                    App.CloseState = 1;
+
+                    if (App.Role == 1 || App.Role == 2)
+                    {
+                        App.DBConnection.StartDynamicDataLoading();
+
+                        new Overview().Show();
+                    }
+                    else if (App.Role == 3)
+                    {
+                        new UserManagement().Show();
+                    }
+
+                    this.Close();
+                }
             }
         }
 

@@ -158,6 +158,7 @@ namespace HELP.Forms
             this.txtLastName.Text = "";
             this.txtUserName.Text = "";
             this.cmbRole.SelectedIndex = -1;
+            this.checkResetPassword.IsChecked = false;
         }
         #endregion
     }

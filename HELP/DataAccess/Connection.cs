@@ -5,12 +5,13 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using System.Windows.Threading;
 
 using MySql.Data.MySqlClient;
 
 using HELP.DataModels;
-using System.Windows;
+using HELP.Forms;
 #endregion
 
 namespace HELP.DataAccess
@@ -114,6 +115,8 @@ namespace HELP.DataAccess
                                     App.FullNameUser = fullName;
                                     App.UserID = (int)result["id"];
 
+                                    if (credentials[2].Equals("password")) return -3;
+
                                     StartDynamicDataLoading();
 
                                     return 1;
@@ -122,12 +125,16 @@ namespace HELP.DataAccess
                                     App.FullNameUser = fullName;
                                     App.UserID = (int)result["id"];
 
+                                    if (credentials[2].Equals("password")) return -3;
+
                                     StartDynamicDataLoading();
 
                                     return 2;
                                 case "admin":
                                     App.Role = 3;
                                     App.FullNameUser = fullName;
+
+                                    if (credentials[2].Equals("password")) return -3;
 
                                     return 3;
                             }
@@ -525,6 +532,24 @@ namespace HELP.DataAccess
                 connection.Open();
 
                 MySqlCommand command = new MySqlCommand("DELETE FROM users WHERE id = " + user.ID, connection);
+
+                command.ExecuteNonQuery();
+            } catch (MySqlException e)
+            {
+                if (e.Message.ToLower().Contains("unable to connect to any of the specified mysql hosts")) MessageBox.Show("Verbindung zum Anwendungsserver fehlgeschlagen!", "Verbindung fehlgeschlagen");
+            } finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void SetUserPassword(int id, string password)
+        {
+            try
+            {
+                connection.Open();
+
+                MySqlCommand command = new MySqlCommand("UPDATE users SET password='" + MD5Hash.HashString(password) + "' WHERE id = " + id, connection);
 
                 command.ExecuteNonQuery();
             } catch (MySqlException e)

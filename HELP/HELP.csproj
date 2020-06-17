@@ -57,6 +57,9 @@
     <Compile Include="Forms\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\NewPassword.xaml.cs">
+      <DependentUpon>NewPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PatientData.xaml.cs">
       <DependentUpon>PatientData.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\NewPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
