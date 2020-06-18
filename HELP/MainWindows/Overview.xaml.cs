@@ -192,64 +192,6 @@ namespace HELP.MainWindows
         }
         #endregion
 
-        private void InitDummyData()
-        {
-            string[] priorities = { "Akut", "Sehr Dringend", "Dringend", "Normal", "Nicht Dringend" };
-            string[] locations = { "Chirurgie", "Orthopädie", "Kardiologie", "Gynäkologie", "Pädiatrie", "Wartezimmer" };
-            string[] statuses = { "Wartet", "In Behandlung", "In Beobachtung" };
-            string[] nationalities = { "Deutsch", "Russisch", "Italienisch", "Bulgarisch" };
-            string[] healtInsurances = { "AOK", "Barmer", "BKK", "IKK", "DAK" };
-            int[] priorityTimers = { 5, 10, 30, 90, 120 };
-
-            Patient[] patients =
-            {
-                new Patient() { PatientNr = 1, FullName = "Hans Müller", KVNR = "0123456789", Birthday = new DateTime(2000,1,1), PlaceOfBirth = "Fulda",  Gender = "Männlich", Nationality = "Deutsch", HealthInsurance = "AOK", Address = "Hohenloher Str. 4", PostalCode = "36041", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754" },
-                new Patient() { PatientNr = 2, FullName = "Bernd Müller", KVNR = "0551232133", Birthday = new DateTime(2000,1,1), PlaceOfBirth = "Frankfurt", Gender = "Männlich", Nationality = "Deutsch", HealthInsurance = "AOK", Address = "Stauferring 71", PostalCode = "36043", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754" },
-                new Patient() { PatientNr = 3, FullName = "Max Mustermann", KVNR = "9876543210", Birthday = new DateTime(1985,11,7) , PlaceOfBirth = "München", Gender = "Divers", Nationality = "Bulgarisch", HealthInsurance = "AOK", Address = "Heinrich Str. 16A", PostalCode = "36042", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754" },
-                new Patient() { PatientNr = 4, FullName = "Fabian Kerz", KVNR = "1122336475", Birthday = new DateTime(2005,3,6), PlaceOfBirth = "Paris",  Gender = "Männlich", Nationality = "Russisch", HealthInsurance = "AOK", Address = "Stauferring 71", PostalCode = "36039", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754" },
-                new Patient() { PatientNr = 5, FullName = "Sabine Schmidt", KVNR = "9524244571", Birthday = new DateTime(1996,9,15), PlaceOfBirth = "Hongkong", Gender = "Weiblich", Nationality = "Deutsch", HealthInsurance = "AOK", Address = "Frankfurter Str. 2", PostalCode = "36042", City = "Fulda", Phone = "0661 943783", Mobile = "0177 78989754" }
-            };
-
-            for (int i = 0; i < priorities.Length; i++)
-            {
-                DynamicData.Priorities.Add(priorities[i], priorityTimers[i]);
-                DynamicData.FilterValues.Add(priorities[i], true);
-            }
-
-            foreach (string location in locations)
-            {
-                DynamicData.Locations.Add(location);
-                DynamicData.FilterValues.Add(location, true);
-            }
-
-            foreach (string status in statuses)
-            {
-                DynamicData.Statuses.Add(status);
-                DynamicData.FilterValues.Add(status, true);
-            }
-
-            foreach (string nationality in nationalities)
-            {
-                DynamicData.Nationalities.Add(nationality);
-            }
-
-            foreach (string healthInsurance in healtInsurances)
-            {
-                DynamicData.HealthInsurances.Add(healthInsurance);
-            }
-
-            foreach (Patient patient in patients)
-            {
-                DynamicData.Patients.Add(patient);
-            }
-
-            DynamicData.Cases.Add(new Case(DynamicData.Patients[0]) { Priority = "Akut", Reevaluation = DateTime.Now.AddMinutes(5), Status = "In Behandlung", Location = "Kardiologie", Complaint = "Fieber, Husten", Diagnosis = "COVID-19" });
-            DynamicData.Cases.Add(new Case(DynamicData.Patients[1]) { Priority = "Sehr Dringend", Reevaluation = DateTime.Now.AddMinutes(10), Status = "In Behandlung", Location = "Chirurgie", Complaint = "Schmerzen im Bein", Diagnosis = "Fibulafraktur" });
-            DynamicData.Cases.Add(new Case(DynamicData.Patients[2]) { Priority = "Dringend", Reevaluation = DateTime.Now.AddMinutes(15), Status = "Wartet", Location = "Wartezimmer", Complaint = "Kopfschmerzen, Übelkeit" });
-            DynamicData.Cases.Add(new Case(DynamicData.Patients[3]) { Priority = "Normal", Reevaluation = DateTime.Now.AddMinutes(20), Status = "In Beobachtung", Location = "Wartezimmer", Complaint = "Daumen blutet", Diagnosis = "Schnittwunde" });
-            DynamicData.Cases.Add(new Case(DynamicData.Patients[4]) { Priority = "Nicht Dringend", Reevaluation = DateTime.Now.AddMinutes(25), Status = "Wartet", Location = "Wartezimmer", Complaint = "Nase läuft" });
-        }
-
         private void InitFilters()
         {
             this.priorityHeader.ContextMenu = new CheckBoxFilterMenu(DynamicData.PrioritiesAsList);
