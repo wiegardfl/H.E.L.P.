@@ -19,7 +19,7 @@ namespace HELP.DataAccess
     public sealed class Connection : Window
     {
         #region Variables
-        private Dictionary<string, string> ConnectionProperties = new Dictionary<string, string>();
+        private Dictionary<string, string> connectionProperties = new Dictionary<string, string>();
         private MySqlConnection connection;
         private MySqlConnection dataLoaderConnection;
         private BackgroundWorker dynamicDataLoader = new BackgroundWorker();
