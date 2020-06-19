@@ -203,7 +203,7 @@
                 <GroupBox Grid.Row="4" Header="Durchgangsdaten">
                     <StackPanel>
                         <Label Content="Sonstige Informationen" />
-                        <TextBox x:Name="txtOtherInformations" Text="{Binding OtherInformations}" />
+                        <TextBox x:Name="txtOtherInformations" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding OtherInformations}" />
                         <Label Content="Anamnese" />
                         <TextBox x:Name="txtAnamnesis" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Anamnesis}" />
 
