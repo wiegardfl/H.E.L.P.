@@ -51,6 +51,17 @@ namespace HELP.Forms
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (this.txtFirstName.Text.Trim().Length == 0 ||
+                this.txtLastName.Text.Trim().Length == 0 ||
+                this.txtUserName.Text.Trim().Length == 0 ||
+                this.cmbRole.SelectedItem == null)
+            {
+                MessageBox.Show("Bitte füllen Sie alle Felder aus!", "Alle Felder ausfüllen");
+
+                return;
+            }
+
+
             List<string> usernames = new List<string>();
 
             foreach (User user in DynamicData.Users)

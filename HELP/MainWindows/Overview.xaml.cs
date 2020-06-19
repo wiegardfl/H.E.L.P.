@@ -61,8 +61,9 @@ namespace HELP.MainWindows
         #region Events
         private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Case caseClone = ((Case)listViewMain.SelectedItem).Clone();
-            CaseWindow selectedCase = new CaseWindow((Case)listViewMain.SelectedItem);
+            Case caseClone = ((Case)((ListViewItem)sender).Content).Clone();
+            //Case caseClone = ((Case)listViewMain.SelectedItem).Clone();
+            CaseWindow selectedCase = new CaseWindow((Case)((ListViewItem)sender).Content);
 
             if (selectedCase.ShowDialog() == false)
             {

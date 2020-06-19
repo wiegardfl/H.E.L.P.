@@ -20,11 +20,6 @@ namespace HELP.MainWindows
 
             this.NewCase = true;
 
-            this.txtComplaint.IsEnabled = true;
-            this.txtTypeOfArrival.IsEnabled = true;
-            this.txtPlaceOfIncident.IsEnabled = true;
-            this.txtTrauma.IsEnabled = true;
-
             App.Editing = true;
 
             Closed += (sender, e) => App.Editing = false;
@@ -48,6 +43,8 @@ namespace HELP.MainWindows
             if (this.SystemCase.Data.PatientNr == 1) this.btnEditData.IsEnabled = false;
 
             App.Editing = true;
+
+            if (this.SystemCase.PreviousVitalParameters.Count > 0) this.cmbVitalParametersBox.SelectedItem = this.SystemCase.VitalParametersTimes[this.SystemCase.PreviousVitalParameters.Count - 1];
 
             Closed += (sender, e) => App.Editing = false;
         }
@@ -257,9 +254,15 @@ namespace HELP.MainWindows
         {
             if (App.Role == 1) // Schwester
             {
-                this.regionMedicalData.IsEnabled = false;
                 this.regionReleaseData.IsEnabled = false;
                 this.btnReleasePatient.IsEnabled = false;
+
+                this.txtOtherInformations.IsEnabled = false;
+                this.txtAnamnesis.IsEnabled = false;
+                this.tabServices.IsEnabled = true;
+                this.txtServices.IsEnabled = false;
+                this.txtExternalServices.IsEnabled = false;
+                this.txtPhysicianLetter.IsEnabled = false;
             } else if (App.Role == 2) // Arzt
             {
                 this.regionArrivalData.IsEnabled = false;

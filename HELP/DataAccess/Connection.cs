@@ -47,7 +47,7 @@ namespace HELP.DataAccess
 
                 try
                 {
-                    ConnectionProperties.Add(keyValue[0], keyValue[1]);
+                    connectionProperties.Add(keyValue[0], keyValue[1]);
                 } catch (IndexOutOfRangeException e)
                 {
                     continue;
@@ -56,13 +56,13 @@ namespace HELP.DataAccess
 
             foreach (string property in properties)
             {
-                if (!ConnectionProperties.ContainsKey(property)) return 2;
+                if (!connectionProperties.ContainsKey(property)) return 2;
             }
 
             try
             {
-                connection = new MySqlConnection("SERVER=" + ConnectionProperties["server"] + ";PORT=" + ConnectionProperties["port"] + ";DATABASE=" + ConnectionProperties["database"] + ";UID=" + ConnectionProperties["username"] + ";PASSWORD=" + ConnectionProperties["password"] + ";");
-                dataLoaderConnection = new MySqlConnection("SERVER=" + ConnectionProperties["server"] + ";PORT=" + ConnectionProperties["port"] + ";DATABASE=" + ConnectionProperties["database"] + ";UID=" + ConnectionProperties["username"] + ";PASSWORD=" + ConnectionProperties["password"] + ";");
+                connection = new MySqlConnection("SERVER=" + connectionProperties["server"] + ";PORT=" + connectionProperties["port"] + ";DATABASE=" + connectionProperties["database"] + ";UID=" + connectionProperties["username"] + ";PASSWORD=" + connectionProperties["password"] + ";");
+                dataLoaderConnection = new MySqlConnection("SERVER=" + connectionProperties["server"] + ";PORT=" + connectionProperties["port"] + ";DATABASE=" + connectionProperties["database"] + ";UID=" + connectionProperties["username"] + ";PASSWORD=" + connectionProperties["password"] + ";");
 
                 connection.Open();
             } catch (MySqlException e)
@@ -326,6 +326,10 @@ namespace HELP.DataAccess
                     ("UPDATE cases SET priority='" + systemCase.Priority +
                      "', status='" + systemCase.Status +
                      "', location='" + systemCase.Location +
+                     "', complaint='" + systemCase.Complaint +
+                     "', type_of_arrival='" + systemCase.TypeOfArrival +
+                     "', place_of_incident='" + systemCase.PlaceOfIncident +
+                     "', trauma='" + systemCase.Trauma +
                      "', other_informations='" + systemCase.OtherInformations +
                      "', anamnesis='" + systemCase.Anamnesis +
                      "', services='" + systemCase.Services +

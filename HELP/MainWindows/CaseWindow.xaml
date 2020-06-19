@@ -139,16 +139,16 @@
                             </WrapPanel>
 
                             <Label Grid.Row="1" Margin="0 2" Content="Hauptproblem" />
-                            <TextBox x:Name="txtComplaint" Grid.Row="2" MaxHeight="93" IsEnabled="False" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Complaint}" />
+                            <TextBox Grid.Row="2" MaxHeight="93" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Complaint}" />
                         </Grid>
 
                         <StackPanel Grid.Column="1">
                             <Label Content="Art der Ankunft" />
-                            <TextBox x:Name="txtTypeOfArrival" IsEnabled="False" TextWrapping="Wrap" Text="{Binding TypeOfArrival}" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding TypeOfArrival}" />
                             <Label Content="Herkunftsort" />
-                            <TextBox x:Name="txtPlaceOfIncident" IsEnabled="False" TextWrapping="Wrap" Text="{Binding PlaceOfIncident}" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding PlaceOfIncident}" />
                             <Label Content="Trauma" />
-                            <TextBox x:Name="txtTrauma" IsEnabled="False" TextWrapping="Wrap" Text="{Binding Trauma}" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Trauma}" />
                         </StackPanel>
                     </Grid>
                 </GroupBox>
@@ -200,24 +200,24 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox x:Name="regionMedicalData" Grid.Row="4" Header="Durchgangsdaten">
+                <GroupBox Grid.Row="4" Header="Durchgangsdaten">
                     <StackPanel>
                         <Label Content="Sonstige Informationen" />
-                        <TextBox Text="{Binding OtherInformations}" />
+                        <TextBox x:Name="txtOtherInformations" Text="{Binding OtherInformations}" />
                         <Label Content="Anamnese" />
-                        <TextBox AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Anamnesis}" />
+                        <TextBox x:Name="txtAnamnesis" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding Anamnesis}" />
 
-                        <TabControl MinHeight="150" Margin="0 10 0 0">
+                        <TabControl x:Name="tabServices" MinHeight="150" Margin="0 10 0 0">
                             <TabItem Header="Dienstleistungen">
-                                <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Services}" />
+                                <TextBox x:Name="txtServices" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Services}" />
                             </TabItem>
                             <TabItem Header="Externe Dienstleistungen">
-                                <TextBox AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding ExternalServices}" />
+                                <TextBox x:Name="txtExternalServices" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding ExternalServices}" />
                             </TabItem>
                         </TabControl>
 
                         <Label Content="Arztbrief" />
-                        <TextBox AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding PhysicianLetter}" />
+                        <TextBox x:Name="txtPhysicianLetter" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding PhysicianLetter}" />
                     </StackPanel>
                 </GroupBox>
 
